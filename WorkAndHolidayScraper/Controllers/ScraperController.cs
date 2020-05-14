@@ -32,7 +32,13 @@ namespace WorkAndHolidayScraper.Controllers
 
             var document = await GetDataPage(url);
             var result = ExtractDataFromDocument(document, jobRowEntries);
-
+            var nextLink = getNextLink(document);
+            while (nextLink != null)
+            {
+                document = await GetDataPage(url);
+                result = ExtractDataFromDocument(document, jobRowEntries);
+                nextLink = getNextLink(document);
+            }
 
             var totalTime = DateTime.Now - startTime;
             var message = $"You are done! Time spent: {totalTime.Duration()})";
@@ -46,6 +52,11 @@ namespace WorkAndHolidayScraper.Controllers
                 });
             }
             return Ok(message);
+        }
+
+        private object getNextLink(IDocument document)
+        {
+            throw new NotImplementedException();
         }
 
         private async Task<IDocument> GetDataPage(string url)
