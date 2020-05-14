@@ -75,6 +75,8 @@ namespace WorkAndHolidayScraper.Controllers
                 JobRowEntry entry = new JobRowEntry();
 
                 entry.Title = jobRow.Children[1].Children[0].Children[0].InnerHtml;
+                // This also gets the title: document.querySelector(".wpjb-grid-row a").innerText
+                // this returns array with each column document.querySelector(".wpjb-grid-row").innerText.split('\n')
                 entry.Company = jobRow.Children[1].Children[1].InnerHtml;
                 entry.Location = jobRow.Children[2].Children[0].Children[0].InnerHtml;
                 entry.Type = jobRow.Children[2].Children[1].InnerHtml.Trim();
