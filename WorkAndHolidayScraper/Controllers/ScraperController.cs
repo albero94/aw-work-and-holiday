@@ -17,11 +17,14 @@ namespace WorkAndHolidayScraper.Controllers
     public class ScraperController : Controller
     {
         private readonly ILogger logger;
+        private readonly Scraper scraper;
         public string url = "https://www.workingholidayjobs.com.au/jobs/";
 
-        public ScraperController(ILogger<ScraperController> logger)
+        public ScraperController(ILogger<ScraperController> logger,
+                Scraper scraper)
         {
             this.logger = logger;
+            this.scraper = scraper;
         }
 
         public async Task<ActionResult> Index()
@@ -29,16 +32,19 @@ namespace WorkAndHolidayScraper.Controllers
             List<JobRowEntry> jobRowEntries = new List<JobRowEntry>();
             var startTime = DateTime.Now;
 
-
-            var document = await GetDataPage(url);
-            var result = ExtractDataFromDocument(document, jobRowEntries);
-            var nextLink = getNextLink(document);
-            while (nextLink != null)
+            string result ="";
+            string nextLink = url;
+            do
             {
-                document = await GetDataPage(url);
-                result = ExtractDataFromDocument(document, jobRowEntries);
-                nextLink = getNextLink(document);
+                IDocument document = await scraper.GetDataPage(nextLink);
+                if (scraper.DocumentIsEmpty(document)) nextLink = null;
+                else
+                {
+                    result = scraper.ExtractDataFromDocument(document, jobRowEntries);
+                    nextLink = scraper.getNextLink(document);
+                }
             }
+            while (nextLink != null);
 
             var totalTime = DateTime.Now - startTime;
             var message = $"You are done! Time spent: {totalTime.Duration()})";
@@ -54,37 +60,5 @@ namespace WorkAndHolidayScraper.Controllers
             return Ok(message);
         }
 
-        private object getNextLink(IDocument document)
-        {
-            throw new NotImplementedException();
-        }
-
-        private async Task<IDocument> GetDataPage(string url)
-        {
-            var config = Configuration.Default.WithDefaultLoader();
-            var context = BrowsingContext.New(config);
-            var document = await context.OpenAsync(url);
-            return document;
-        }
-
-        private string ExtractDataFromDocument(IDocument document, List<JobRowEntry> jobRowEntries)
-        {
-            var rows = document.QuerySelectorAll(".wpjb-grid-row");
-            foreach (var jobRow in rows)
-            {
-                JobRowEntry entry = new JobRowEntry();
-
-                entry.Title = jobRow.Children[1].Children[0].Children[0].InnerHtml;
-                // This also gets the title: document.querySelector(".wpjb-grid-row a").innerText
-                // this returns array with each column document.querySelector(".wpjb-grid-row").innerText.split('\n')
-                entry.Company = jobRow.Children[1].Children[1].InnerHtml;
-                entry.Location = jobRow.Children[2].Children[0].Children[0].InnerHtml;
-                entry.Type = jobRow.Children[2].Children[1].InnerHtml.Trim();
-                entry.Date = jobRow.Children[3].Children[0].InnerHtml.Trim();
-
-                if (!string.IsNullOrEmpty(entry.Title)) jobRowEntries.Add(entry);
-            }
-            return "Succeed";
-        }
     }
 }
