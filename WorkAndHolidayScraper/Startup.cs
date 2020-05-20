@@ -28,7 +28,9 @@ namespace WorkAndHolidayScraper
         {
             services.AddControllers();
             services.AddLogging();
-            services.AddScoped<Scraper>();
+            services.AddScoped<IScraper, WorkingHolidayJobsScraper>();
+            services.AddSingleton<IRepository, MockRepository>();
+            //services.AddScoped<IRepository, SqlRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -7,20 +7,23 @@ using WorkAndHolidayScraper.Models;
 namespace WorkAndHolidayScraper.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("{controller}/{Action=Index}")]
     public class ScraperController : Controller
     {
         private readonly ILogger logger;
-        private readonly Scraper scraper;
+        private readonly WorkingHolidayJobsScraper scraper;
+        private readonly IRepository repository;
 
         public ScraperController(ILogger<ScraperController> logger,
-                Scraper scraper)
+                WorkingHolidayJobsScraper scraper,
+                IRepository repository)
         {
             this.logger = logger;
             this.scraper = scraper;
+            this.repository = repository;
         }
 
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Download()
         {
             var startTime = DateTime.Now;
 
@@ -36,5 +39,13 @@ namespace WorkAndHolidayScraper.Controllers
                 Results = scrapedData
             });
         }
+
+        public ActionResult Index()
+        {
+            logger.LogTrace("Retrieving all jobs in the database");
+            return Ok(repository.GetAllJobs());
+        }
+
+
     }
 }

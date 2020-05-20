@@ -9,18 +9,21 @@ using System.Text.RegularExpressions;
 
 namespace WorkAndHolidayScraper.Models
 {
-    public class Scraper
+    public class WorkingHolidayJobsScraper : IScraper
     {
         private readonly string mainUrl = "https://www.workingholidayjobs.com.au/jobs/";
-        private readonly ILogger<Scraper> logger;
-        private readonly List<JobRowEntry> jobRowEntries = new List<JobRowEntry>();
-
-        public Scraper(ILogger<Scraper> logger)
+        private readonly ILogger<WorkingHolidayJobsScraper> logger;
+        private readonly IRepository repository;
+        private readonly List<Job> jobRowEntries = new List<Job>();
+        
+        public WorkingHolidayJobsScraper(ILogger<WorkingHolidayJobsScraper> logger,
+                IRepository repository)
         {
             this.logger = logger;
+            this.repository = repository;
         }
 
-        public async Task<List<JobRowEntry>> Run()
+        public async Task<List<Job>> Run()
         {
             logger.LogTrace("Scraper started.");
 
@@ -36,6 +39,8 @@ namespace WorkAndHolidayScraper.Models
                 }
             }
             while (nextLink != null);
+
+            repository.AddJobsFromList(jobRowEntries);
 
             logger.LogTrace("Scraper ended.");
             return jobRowEntries;
@@ -60,12 +65,12 @@ namespace WorkAndHolidayScraper.Models
             logger.LogTrace("Document downloaded");
             return document;
         }
-        private string ExtractDataFromDocument(IDocument document, List<JobRowEntry> jobRowEntries)
+        private string ExtractDataFromDocument(IDocument document, List<Job> jobRowEntries)
         {
             var rows = document.QuerySelectorAll(".wpjb-grid-row");
             foreach (var jobRow in rows)
             {
-                JobRowEntry entry = new JobRowEntry();
+                Job entry = new Job();
 
                 // this returns array with each column document.querySelector(".wpjb-grid-row").innerText.split('\n')
                 // but too many \n, worked better in the browser

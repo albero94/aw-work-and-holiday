@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 
 namespace WorkAndHolidayScraper.Models
 {
-    public class JobRowEntry
+    public class Job
     {
         public string Title { get; set; }
         public string Company { get; set; }
         public string Location { get; set; }
         public string Date { get; set; }
         public string Type { get; set; }
+        public string Href { get; set; }
     }
 }
