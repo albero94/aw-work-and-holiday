@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WorkAndHolidayScraper.Models
 {
-    interface IScraper
+    public interface IScraper
     {
         public Task<List<Job>> Run();
     }

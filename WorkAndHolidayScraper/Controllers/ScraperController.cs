@@ -11,11 +11,11 @@ namespace WorkAndHolidayScraper.Controllers
     public class ScraperController : Controller
     {
         private readonly ILogger logger;
-        private readonly WorkingHolidayJobsScraper scraper;
+        private readonly IScraper scraper;
         private readonly IRepository repository;
 
         public ScraperController(ILogger<ScraperController> logger,
-                WorkingHolidayJobsScraper scraper,
+                IScraper scraper,
                 IRepository repository)
         {
             this.logger = logger;

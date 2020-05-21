@@ -28,7 +28,7 @@ namespace WorkAndHolidayScraper
         {
             services.AddControllers();
             services.AddLogging();
-            services.AddScoped<IScraper, WorkingHolidayJobsScraper>();
+            services.AddSingleton<IScraper, WorkingHolidayJobsScraper>();
             services.AddSingleton<IRepository, MockRepository>();
             //services.AddScoped<IRepository, SqlRepository>();
         }
