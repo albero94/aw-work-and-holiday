@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AngleSharp;
+﻿using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace WorkAndHolidayScraper.Models
 {
-    public class WorkingHolidayJobsScraper : IScraper
+    public class SeekScraper : IScraper
     {
-        private readonly string mainUrl = "https://www.workingholidayjobs.com.au/jobs/";
-        private readonly ILogger<WorkingHolidayJobsScraper> logger;
+        private readonly string mainUrl = "https://www.seek.com.au/working-holiday-visa-jobs";
+        private readonly ILogger<SeekScraper> logger;
         private readonly IRepository repository;
         private readonly List<Job> jobRowEntries = new List<Job>();
-        
-        public WorkingHolidayJobsScraper(ILogger<WorkingHolidayJobsScraper> logger,
+
+        public SeekScraper(ILogger<SeekScraper> logger,
                 IRepository repository)
         {
             this.logger = logger;
@@ -32,8 +32,8 @@ namespace WorkAndHolidayScraper.Models
             do
             {
                 IDocument document = await GetPageDocument(nextLink);
-                if (DocumentIsEmpty(document)) nextLink = null;
-                else
+                //if (DocumentIsEmpty(document)) nextLink = null;
+                //else
                 {
                     ExtractDataFromDocument(document, jobRowEntries);
                     nextLink = getNextLink(document);
@@ -52,7 +52,7 @@ namespace WorkAndHolidayScraper.Models
 
             if (!url.Contains("page")) url += "page/1";
             var currentPage = Regex.Match(url, @"\d+").Value;
-            
+
             if (currentPage == "") return null;
             return url.Replace
                 (currentPage, (int.Parse(currentPage) + 1).ToString());
@@ -68,20 +68,18 @@ namespace WorkAndHolidayScraper.Models
         }
         private string ExtractDataFromDocument(IDocument document, List<Job> jobRowEntries)
         {
-            var rows = document.QuerySelectorAll(".wpjb-grid-row");
+            var rows = document.QuerySelectorAll("article");
             foreach (var jobRow in rows)
             {
-                Job entry = new Job() {OriginalWebsite = "WorkingHolidayJobs" };
+                Job entry = new Job() { OriginalWebsite = "Seek" };
 
-                // this returns array with each column document.querySelector(".wpjb-grid-row").innerText.split('\n')
-                // but too many \n, worked better in the browser
-
-                entry.Title = jobRow.Children[1].Children[0].Children[0].InnerHtml;
-                entry.Href = ((IHtmlAnchorElement)jobRow.Children[1].Children[0].Children[0]).Href;
-                entry.Company = jobRow.Children[1].Children[1].InnerHtml;
-                entry.Location = jobRow.Children[2].Children[0].Children[0].InnerHtml;
-                entry.Type = jobRow.Children[2].Children[1].InnerHtml.Trim();
-                entry.Date = jobRow.Children[3].Children[0].InnerHtml.Trim();
+                entry.Title = ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobTitle']"))?.Text;
+                entry.Href = ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobTitle']")).Href;
+                entry.Company = ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobCompany']"))?.Text;
+                entry.Location = ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobLocation']"))?.Text +
+                        ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobArea']"))?.Text;
+                entry.Description = ((IHtmlSpanElement)jobRow.QuerySelector("[data-automation='jobShortDescription']"))?.TextContent;
+                entry.Date = ((IHtmlSpanElement)jobRow.QuerySelector("[data-automation='jobListingDate']"))?.TextContent;
 
                 if (!string.IsNullOrEmpty(entry.Title)) jobRowEntries.Add(entry);
             }
