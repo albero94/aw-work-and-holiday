@@ -15,8 +15,8 @@ namespace WorkAndHolidayScraper.Models
         {
             jobList = new List<Job>()
             {
-                new Job(){Title = "Test Job", Company ="Test Company", Date = DateTime.Today.ToString(), Href="www.indeed.com", Location="Australia", Type="Full time"},
-                new Job(){Title = "Test Job 2", Company ="Test Company 2", Date = DateTime.Today.ToString(), Href="www.indeed.com", Location="Australia", Type="Part time"},
+                new Job(){Title = "Test Job", Company ="Test Company", Date = DateTime.Today, Href="www.indeed.com", Location="Australia", Type="Full time"},
+                new Job(){Title = "Test Job 2", Company ="Test Company 2", Date = DateTime.Today, Href="www.indeed.com", Location="Australia", Type="Part time"},
             };
             this.logger = logger;
 

@@ -76,20 +76,14 @@ namespace WorkAndHolidayScraper.Models
                 entry.Location = ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobLocation']"))?.Text +
                         ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobArea']"))?.Text;
                 entry.Description = ((IHtmlSpanElement)jobRow.QuerySelector("[data-automation='jobShortDescription']"))?.TextContent;
-                var stringDate = ((IHtmlSpanElement)jobRow.QuerySelector("[data-automation='jobListingDate']"))?.TextContent;
-                entry.Date = stringToDateTime(stringDate);
+                entry.Date = DateConversion.DaysAgoStringToDate
+                        (((IHtmlSpanElement)jobRow.QuerySelector("[data-automation='jobListingDate']"))?.TextContent);
 
                 if (!string.IsNullOrEmpty(entry.Title) && !string.IsNullOrEmpty(entry.Href))
                     jobRowEntries.Add(entry);
             }
             logger.LogTrace("Data extracted from document.");
             return "Succeed";
-        }
-
-        private string stringToDateTime(string stringDate)
-        {
-            return stringDate;
-            throw new NotImplementedException();
         }
 
         internal bool DocumentIsEmpty(IDocument document)
