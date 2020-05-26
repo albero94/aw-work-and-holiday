@@ -7,16 +7,20 @@ namespace WorkAndHolidayScraper.Models
 {
     public static class DateConversion
     {
-        public static DateTime? DayMonthStringToDate(string dateString)
+        public static DateTime? MonthDayStringToDate(string dateString)
         {
-            var month = MonthAbreviationToNumber(dateString.Split(",")[0]);
-            var day = int.Parse(dateString.Split(",")[1]);
+            try
+            {
+                var month = MonthAbreviationToNumber(dateString.Split(",")[0]);
+                var day = int.Parse(dateString.Split(",")[1]);
 
-            if (month == null) return null;
+                if (month == null) return null;
 
-            return new DateTime(DateTime.Today.Year, month.Value, day);
+                return new DateTime(DateTime.Today.Year, month.Value, day);
+            }
+            catch { return null; }
         }
-        public static int? MonthAbreviationToNumber(string month)
+        internal static int? MonthAbreviationToNumber(string month)
         {
             switch (month)
             {
@@ -36,11 +40,16 @@ namespace WorkAndHolidayScraper.Models
             return null;
         }
 
-        internal static DateTime? DaysAgoStringToDate(string daysAgo)
+        public static DateTime? DaysHoursAgoStringToDate(string daysAgo)
         {
-            var daysAgoInt = int.Parse(daysAgo.Split("d")[0]);
-            DateTime.Today.AddDays(-1 * daysAgoInt);
-            
+            try
+            {
+                if (daysAgo.Contains("h")) return DateTime.Today;
+
+                var daysAgoInt = int.Parse(daysAgo.Split("d")[0]);
+                return DateTime.Today.AddDays(-1 * daysAgoInt);
+            }
+            catch { return null; }
         }
     }
 }
