@@ -32,8 +32,8 @@ namespace WorkAndHolidayScraper.Models
             do
             {
                 IDocument document = await GetPageDocument(nextLink);
-                //if (DocumentIsEmpty(document)) nextLink = null;
-                //else
+                if (DocumentIsEmpty(document)) nextLink = null;
+                else
                 {
                     ExtractDataFromDocument(document, jobRowEntries);
                     nextLink = getNextLink(document);
@@ -46,17 +46,13 @@ namespace WorkAndHolidayScraper.Models
             logger.LogTrace("Scraper ended.");
             return jobRowEntries;
         }
+
         private string getNextLink(IDocument document)
         {
-            var url = document.Url;
-
-            if (!url.Contains("page")) url += "page/1";
-            var currentPage = Regex.Match(url, @"\d+").Value;
-
-            if (currentPage == "") return null;
-            return url.Replace
-                (currentPage, (int.Parse(currentPage) + 1).ToString());
+            var url = ((IHtmlAnchorElement)document.QuerySelector("[data-automation='page-next']"))?.Href;
+            return url;
         }
+
         private async Task<IDocument> GetPageDocument(string url)
         {
             var config = Configuration.Default.WithDefaultLoader();
@@ -66,6 +62,7 @@ namespace WorkAndHolidayScraper.Models
             logger.LogTrace("Document downloaded");
             return document;
         }
+
         private string ExtractDataFromDocument(IDocument document, List<Job> jobRowEntries)
         {
             var rows = document.QuerySelectorAll("article");
@@ -79,18 +76,25 @@ namespace WorkAndHolidayScraper.Models
                 entry.Location = ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobLocation']"))?.Text +
                         ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobArea']"))?.Text;
                 entry.Description = ((IHtmlSpanElement)jobRow.QuerySelector("[data-automation='jobShortDescription']"))?.TextContent;
-                entry.Date = ((IHtmlSpanElement)jobRow.QuerySelector("[data-automation='jobListingDate']"))?.TextContent;
+                var stringDate = ((IHtmlSpanElement)jobRow.QuerySelector("[data-automation='jobListingDate']"))?.TextContent;
+                entry.Date = stringToDateTime(stringDate);
 
-                if (!string.IsNullOrEmpty(entry.Title)) jobRowEntries.Add(entry);
+                if (!string.IsNullOrEmpty(entry.Title) && !string.IsNullOrEmpty(entry.Href))
+                    jobRowEntries.Add(entry);
             }
             logger.LogTrace("Data extracted from document.");
             return "Succeed";
         }
 
+        private string stringToDateTime(string stringDate)
+        {
+            return stringDate;
+            throw new NotImplementedException();
+        }
+
         internal bool DocumentIsEmpty(IDocument document)
         {
-            if (document.QuerySelector(".wpjb-grid-row").TextContent.Contains("No job listings found")) return true;
-            else return false;
+            return document.QuerySelectorAll("article").Count() == 0;
         }
     }
 }
