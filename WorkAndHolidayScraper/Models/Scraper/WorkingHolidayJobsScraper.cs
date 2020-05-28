@@ -19,20 +19,16 @@ namespace WorkAndHolidayScraper.Models.Scraper
         }
 
         protected override bool DocumentIsEmpty(IDocument document) =>
-            document.QuerySelectorAll("article").Count() == 0;
+            document.QuerySelector(".wpjb-grid-row").TextContent.Contains("No job listings found");
 
-        protected override string ExtractDataFromDocument(IDocument document, List<Job> jobRowEntries)
+        protected override void ExtractDataFromDocument(IDocument document, List<Job> jobRowEntries)
         {
             var rows = document.QuerySelectorAll(".wpjb-grid-row");
             foreach (var jobRow in rows)
             {
                 Job entry = new Job() { OriginalWebsite = "WorkingHolidayJobs" };
-
-                // this returns array with each column document.querySelector(".wpjb-grid-row").innerText.split('\n')
-                // but too many \n, worked better in the browser
                 try
                 {
-
                     entry.Title = jobRow.Children[1].Children[0].Children[0].InnerHtml;
                     entry.Href = ((IHtmlAnchorElement)jobRow.Children[1].Children[0].Children[0]).Href;
                     entry.Company = jobRow.Children[1].Children[1].InnerHtml;
@@ -41,13 +37,14 @@ namespace WorkAndHolidayScraper.Models.Scraper
                     entry.Date = DateConversion.MonthDayStringToDate(jobRow.Children[3].Children[0].InnerHtml.Trim());
 
                     if (IsValidEntry(entry)) jobRowEntries.Add(entry);
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
-                    logger.LogWarning("Job could not be added", ex.Message, entry);
+                    logger.LogInformation("Job could not be added", ex.Message, entry);
                 }
             }
             logger.LogTrace("Data extracted from document.");
-            return "Succeed";
+            return;
         }
 
         protected override string? getNextLinkUrl(IDocument document)

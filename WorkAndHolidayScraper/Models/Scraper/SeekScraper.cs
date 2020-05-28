@@ -21,7 +21,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
         protected override bool DocumentIsEmpty(IDocument document) =>
             document.QuerySelectorAll("article").Count() == 0;
 
-        protected override string ExtractDataFromDocument(IDocument document, List<Job> jobRowEntries)
+        protected override void ExtractDataFromDocument(IDocument document, List<Job> jobRowEntries)
         {
             var rows = document.QuerySelectorAll("article");
             foreach (var jobRow in rows)
@@ -32,7 +32,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
                 {
                     entry.Title = ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobTitle']")).Text;
                     entry.Href = ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobTitle']")).Href;
-                    entry.Company = ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobCompany']")).Text;
+                    entry.Company = ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobCompany']"))?.Text;
                     entry.Location = ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobLocation']")).Text +
                             ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobArea']"))?.Text;
                     entry.Description = ((IHtmlSpanElement)jobRow.QuerySelector("[data-automation='jobShortDescription']")).TextContent;
@@ -42,11 +42,11 @@ namespace WorkAndHolidayScraper.Models.Scraper
                     if (IsValidEntry(entry)) jobRowEntries.Add(entry);
                 }catch (Exception ex)
                 {
-                    logger.LogWarning("Job could not be added", ex.Message, entry);
+                    logger.LogWarning($"Job could not be added: {ex.Message}", entry);
                 }
             }
             logger.LogTrace("Data extracted from document.");
-            return "Succeed";
+            return;
         }
 
         protected override string? getNextLinkUrl(IDocument document) =>

@@ -57,7 +57,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
 
         protected abstract string? getNextLinkUrl(IDocument document);
 
-        protected abstract string ExtractDataFromDocument(IDocument document, List<Job> jobRowEntries);
+        protected abstract void ExtractDataFromDocument(IDocument document, List<Job> jobRowEntries);
 
         protected abstract bool DocumentIsEmpty(IDocument document);
 
