@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WorkAndHolidayScraper.Models;
+using WorkAndHolidayScraper.Models.Scraper;
 
 namespace WorkAndHolidayScraper
 {
@@ -28,7 +29,7 @@ namespace WorkAndHolidayScraper
         {
             services.AddControllers();
             services.AddLogging();
-            services.AddSingleton<IScraper, SeekScraper>();
+            services.AddSingleton<Scraper, SeekScraper>();
             services.AddSingleton<IRepository, MockRepository>();
             //services.AddScoped<IRepository, SqlRepository>();
         }

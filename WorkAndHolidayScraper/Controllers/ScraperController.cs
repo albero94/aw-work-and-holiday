@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using WorkAndHolidayScraper.Models;
+using WorkAndHolidayScraper.Models.Scraper;
 
 namespace WorkAndHolidayScraper.Controllers
 {
@@ -11,11 +12,11 @@ namespace WorkAndHolidayScraper.Controllers
     public class ScraperController : Controller
     {
         private readonly ILogger logger;
-        private readonly IScraper scraper;
+        private readonly Scraper scraper;
         private readonly IRepository repository;
 
         public ScraperController(ILogger<ScraperController> logger,
-                IScraper scraper,
+                Scraper scraper,
                 IRepository repository)
         {
             this.logger = logger;
