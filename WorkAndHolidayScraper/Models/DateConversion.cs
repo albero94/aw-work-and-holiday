@@ -7,8 +7,9 @@ namespace WorkAndHolidayScraper.Models
 {
     public static class DateConversion
     {
-        public static DateTime? MonthDayStringToDate(string dateString)
+        public static DateTime? MonthDayStringToDate(string? dateString)
         {
+            if (dateString == null) return null;
             try
             {
                 var month = MonthAbreviationToNumber(dateString.Split(",")[0]);
@@ -40,8 +41,9 @@ namespace WorkAndHolidayScraper.Models
             return null;
         }
 
-        public static DateTime? DaysHoursAgoStringToDate(string daysAgo)
+        public static DateTime? DaysHoursAgoStringToDate(string? daysAgo)
         {
+            if (daysAgo == null) return null;
             try
             {
                 if (daysAgo.Contains("h")) return DateTime.Today;
