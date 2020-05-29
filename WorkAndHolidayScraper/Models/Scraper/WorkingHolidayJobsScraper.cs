@@ -13,8 +13,9 @@ namespace WorkAndHolidayScraper.Models.Scraper
 {
     public class WorkingHolidayJobsScraper : Scraper
     {
+        private static readonly string url = "https://www.workingholidayjobs.com.au/jobs/";
         public WorkingHolidayJobsScraper(IRepository repository, ILogger<WorkingHolidayJobsScraper> logger) :
-            base(repository, logger, "https://www.workingholidayjobs.com.au/jobs/")
+            base(repository, logger, url)
         {
         }
 

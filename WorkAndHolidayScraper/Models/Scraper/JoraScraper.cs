@@ -1,4 +1,5 @@
-﻿using AngleSharp.Dom;
+﻿using AngleSharp;
+using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,13 +11,14 @@ namespace WorkAndHolidayScraper.Models.Scraper
 {
     public class JoraScraper : Scraper
     {
+        private static readonly string url = "https://au.jora.com/j?q=working+holiday+visa&l=&sp=homepage";
         public JoraScraper(IRepository repository, ILogger<JoraScraper> logger) :
-            base(repository, logger, "https://au.jora.com/j?q=working+holiday+visa&l=&sp=homepage")
+            base(repository, logger, url)
         {
         }
 
         protected override bool DocumentIsEmpty(IDocument document) =>
-            document.QuerySelectorAll("article").Count() == 0;
+            document.QuerySelectorAll(".result").Count() == 0;
 
         protected override void ExtractDataFromDocument(IDocument document, List<Job> jobRowEntries)
         {
@@ -29,14 +31,12 @@ namespace WorkAndHolidayScraper.Models.Scraper
                 {
                     entry.Title = ((IHtmlAnchorElement)jobRow.QuerySelector("a")).Title;
                     entry.Href = ((IHtmlAnchorElement)jobRow.QuerySelector("a")).Href;
-                    entry.Company = jobRow.QuerySelector(".company") .InnerHtml;
-                    //entry.Location = ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobLocation']")).Text +
-                    //        ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobArea']"))?.Text;
-                    //entry.Description = ((IHtmlSpanElement)jobRow.QuerySelector("[data-automation='jobShortDescription']")).TextContent;
-                    //entry.Date = DateConversion.DaysHoursAgoStringToDate
-                    //        (((IHtmlSpanElement)jobRow.QuerySelector("[data-automation='jobListingDate']")).TextContent);
+                    entry.Company = jobRow.QuerySelector(".company")?.InnerHtml;
+                    entry.Location = jobRow.QuerySelector(".location") .InnerHtml;
+                    entry.Description = jobRow.QuerySelector(".summary") .InnerHtml;
+                    entry.Date = DateConversion.DaysHoursAgoStringToDate(jobRow.QuerySelector(".date") .InnerHtml);
 
-                    //if (IsValidEntry(entry)) jobRowEntries.Add(entry);
+                    if (IsValidEntry(entry)) jobRowEntries.Add(entry);
                 }
                 catch (Exception ex)
                 {
@@ -48,6 +48,6 @@ namespace WorkAndHolidayScraper.Models.Scraper
         }
 
         protected override string? getNextLinkUrl(IDocument document) =>
-            ((IHtmlAnchorElement)document.QuerySelector("[data-automation='page-next']"))?.Href;
+            ((IHtmlAnchorElement)document.QuerySelector("a.next_page"))?.Href;
     }
 }

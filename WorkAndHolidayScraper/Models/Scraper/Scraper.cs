@@ -36,7 +36,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
                 else
                 {
                     ExtractDataFromDocument(document, jobRowEntries);
-                    nextLink = getNextLinkUrl(document);
+                     nextLink = getNextLinkUrl(document);
                 }
             }
             while (nextLink != null);

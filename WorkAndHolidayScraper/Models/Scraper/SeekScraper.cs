@@ -13,8 +13,9 @@ namespace WorkAndHolidayScraper.Models.Scraper
 {
     public class SeekScraper : Scraper
     {
+        private static readonly string url = "https://www.seek.com.au/working-holiday-visa-jobs";
         public SeekScraper(IRepository repository, ILogger<SeekScraper> logger) :
-            base(repository, logger, "https://www.seek.com.au/working-holiday-visa-jobs")
+            base(repository, logger, url)
         {
         }
 
