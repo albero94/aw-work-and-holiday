@@ -15,5 +15,6 @@ namespace WorkAndHolidayScraper.Models
         public string Type { get; set; }
         public string Href { get; set; }
         public string OriginalWebsite { get; set; }
+        public string Salary { get; set; }
     }
 }
