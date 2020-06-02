@@ -13,6 +13,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
 {
     public class SeekScraper : Scraper
     {
+        private readonly string WebsiteName = "Seek";
         private static readonly string url = "https://www.seek.com.au/working-holiday-visa-jobs";
         public SeekScraper(IRepository repository, ILogger<SeekScraper> logger) :
             base(repository, logger, url)
@@ -27,7 +28,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
             var rows = document.QuerySelectorAll("article");
             foreach (var jobRow in rows)
             {
-                Job entry = new Job() { OriginalWebsite = "Seek" };
+                Job entry = new Job() { OriginalWebsite = WebsiteName };
 
                 try
                 {

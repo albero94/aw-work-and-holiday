@@ -12,6 +12,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
 {
     public class IndeedScraper : Scraper
     {
+        private readonly string WebsiteName = "Indeed";
         private readonly int JobNumberLimit = 210;
         private static readonly string url = "https://au.indeed.com/jobs?q=working+holiday+visa&l=";
         public IndeedScraper(IRepository repository, ILogger<IndeedScraper> logger) :
@@ -28,7 +29,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
             var rows = document.QuerySelectorAll(".result");
             foreach (var jobRow in rows)
             {
-                Job entry = new Job() { OriginalWebsite = "Indeed" };
+                Job entry = new Job() { OriginalWebsite = WebsiteName };
 
                 try
                 {

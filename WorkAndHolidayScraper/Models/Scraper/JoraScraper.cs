@@ -11,6 +11,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
 {
     public class JoraScraper : Scraper
     {
+        private readonly string WebsiteName = "Jora";
         private static readonly string url = "https://au.jora.com/j?q=working+holiday+visa&l=&sp=homepage";
         public JoraScraper(IRepository repository, ILogger<JoraScraper> logger) :
             base(repository, logger, url)
@@ -25,7 +26,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
             var rows = document.QuerySelectorAll(".result");
             foreach (var jobRow in rows)
             {
-                Job entry = new Job() { OriginalWebsite = "Jora" };
+                Job entry = new Job() { OriginalWebsite = WebsiteName };
 
                 try
                 {

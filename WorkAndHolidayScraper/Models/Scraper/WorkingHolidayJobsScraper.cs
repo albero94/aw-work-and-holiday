@@ -13,6 +13,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
 {
     public class WorkingHolidayJobsScraper : Scraper
     {
+        private readonly string WebsiteName = "WorkingHolidayJobs";
         private static readonly string url = "https://www.workingholidayjobs.com.au/jobs/";
         public WorkingHolidayJobsScraper(IRepository repository, ILogger<WorkingHolidayJobsScraper> logger) :
             base(repository, logger, url)
@@ -27,7 +28,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
             var rows = document.QuerySelectorAll(".wpjb-grid-row");
             foreach (var jobRow in rows)
             {
-                Job entry = new Job() { OriginalWebsite = "WorkingHolidayJobs" };
+                Job entry = new Job() { OriginalWebsite = WebsiteName };
                 try
                 {
                     entry.Title = jobRow.Children[1].Children[0].Children[0].InnerHtml;
