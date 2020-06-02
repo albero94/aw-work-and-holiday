@@ -47,7 +47,7 @@ namespace WorkAndHolidayScraper.Models
             if (daysAgo == null) return null;
             try
             {
-                if (daysAgo.Contains("+")) return DateTime.Today.AddDays(-1 * moreThan30Days);
+                if (daysAgo.Contains("+") || daysAgo.Contains("month")) return DateTime.Today.AddDays(-1 * moreThan30Days);
                 if (daysAgo.Contains("h")) return DateTime.Today;
 
                 var daysAgoInt = int.Parse(daysAgo.Split("d")[0]);

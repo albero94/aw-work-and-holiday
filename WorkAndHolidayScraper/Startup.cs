@@ -29,7 +29,7 @@ namespace WorkAndHolidayScraper
         {
             services.AddControllers();
             services.AddLogging();
-            services.AddSingleton<Scraper, IndeedScraper>();
+            services.AddSingleton<Scraper, JoobleScraper>();
             services.AddSingleton<IRepository, MockRepository>();
             //services.AddScoped<IRepository, SqlRepository>();
         }
