@@ -4,28 +4,24 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WorkAndHolidayScraper.Models.Scraper
 {
     public class IndeedScraper : Scraper
     {
+        private readonly int JobNumberLimit = 210;
         private static readonly string url = "https://au.indeed.com/jobs?q=working+holiday+visa&l=";
         public IndeedScraper(IRepository repository, ILogger<IndeedScraper> logger) :
             base(repository, logger, url)
         {
         }
 
-        protected override bool DocumentIsEmpty(IDocument document)
-        {
-            var result = document.QuerySelectorAll(".result").Count() == 0;
-            if(result == true)
-            {
-                return result;
-            }
-            return result;
-        }
-            
+        protected override bool DocumentIsEmpty(IDocument document) =>
+            document.QuerySelectorAll(".result").Count() == 0;
+
 
         protected override void ExtractDataFromDocument(IDocument document, List<Job> jobRowEntries)
         {
@@ -57,12 +53,19 @@ namespace WorkAndHolidayScraper.Models.Scraper
 
         protected override string? getNextLinkUrl(IDocument document)
         {
-            var result = ((IHtmlAnchorElement)document.QuerySelector(".pagination-list [aria-label='Next']"))?.Href;
-            if (result == null)
+            try
             {
+                var result = ((IHtmlAnchorElement)document.QuerySelector(".pagination-list [aria-label='Next']"))?.Href;
+                if (result == null)
+                {
+                    var jobNumber = new Regex(@"\d+").Match(document.BaseUri).ToString();
+                    if (int.Parse(jobNumber) > JobNumberLimit) return null;
+
+                    result = document.BaseUri.Split(jobNumber)[0] + (int.Parse(jobNumber) + 10).ToString();
+                }
                 return result;
             }
-            return result;
+            catch { return null; }
         }
     }
 }
