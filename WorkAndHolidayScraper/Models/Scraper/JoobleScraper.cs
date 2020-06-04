@@ -12,7 +12,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
     public class JoobleScraper : Scraper
     {
         private readonly string WebsiteName = "Jooble";
-        private static readonly string url = "https://au.jooble.org/jobs-working-holiday-visa?p=1";
+        private static readonly string url = "https://au.jooble.org/m/jobs-working-holiday-visa?p=99";
         public JoobleScraper(IRepository repository, ILogger<JoobleScraper> logger) :
             base(repository, logger, url)
         {
@@ -49,14 +49,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
             return;
         }
 
-        protected override string? getNextLinkUrl(IDocument document)
-        {
-            string pageNumber = new Regex(@"\d").Match(document.BaseUri).ToString();
-            string newUrl = document.BaseUri.Split(pageNumber)[0] + (int.Parse(pageNumber) + 1);
-
-            if (NextLinkExists(document, newUrl)) return newUrl;
-            else return null;
-        }
+        protected override string? getNextLinkUrl(IDocument document) => null;
 
         private bool NextLinkExists(IDocument document, string newUrl)
         {
