@@ -23,12 +23,26 @@ namespace WorkAndHolidayScraper
         {
             services.AddControllers();
             services.AddLogging();
-            services.AddScoped<Scraper, WorkingHolidayJobsScraper>();
-
             //services.AddSingleton<IRepository, MockRepository>();
             services.AddScoped<IRepository, PostgresRepository>();
+            services.AddScoped<ScraperFactory>();
+            AddScraperServices(services);
 
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultString")));
+        }
+
+        private static void AddScraperServices(IServiceCollection services)
+        {
+            services.AddScoped<IndeedScraper>()
+                    .AddScoped<Scraper, IndeedScraper>(s => s.GetService<IndeedScraper>());
+            services.AddScoped<JoobleScraper>()
+                    .AddScoped<Scraper, JoobleScraper>(s => s.GetService<JoobleScraper>());
+            services.AddScoped<JoraScraper>()
+                    .AddScoped<Scraper, JoraScraper>(s => s.GetService<JoraScraper>());
+            services.AddScoped<SeekScraper>()
+                    .AddScoped<Scraper, SeekScraper>(s => s.GetService<SeekScraper>());
+            services.AddScoped<WorkingHolidayJobsScraper>()
+                    .AddScoped<Scraper, WorkingHolidayJobsScraper>(s => s.GetService<WorkingHolidayJobsScraper>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
