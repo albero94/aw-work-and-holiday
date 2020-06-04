@@ -49,8 +49,9 @@ namespace WorkAndHolidayScraper.Controllers
         {
             var startTime = DateTime.Now;
 
-            var tasks = new List<Task<List<Job>>>();
+            var tasks = new List<Task>();
             var scraperList = new List<string>() { "Indeed", "Jora", "Jooble", "Seek", "WorkingHolidayJobs" };
+
             foreach (var scraperName in scraperList)
             {
                 Scraper? scraper = scraperFactory.GetScraper(scraperName);
