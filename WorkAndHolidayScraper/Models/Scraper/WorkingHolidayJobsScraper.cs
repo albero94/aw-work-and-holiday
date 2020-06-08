@@ -35,7 +35,6 @@ namespace WorkAndHolidayScraper.Models.Scraper
                     entry.Href = ((IHtmlAnchorElement)jobRow.Children[1].Children[0].Children[0]).Href;
                     entry.Company = jobRow.Children[1].Children[1].InnerHtml;
                     entry.Location = jobRow.Children[2].Children[0].Children[0].InnerHtml;
-                    entry.Type = jobRow.Children[2].Children[1].InnerHtml.Trim();
                     entry.Date = DateConversion.MonthDayStringToDate(jobRow.Children[3].Children[0].InnerHtml.Trim());
 
                     if (IsValidEntry(entry)) jobRowEntries.Add(entry);

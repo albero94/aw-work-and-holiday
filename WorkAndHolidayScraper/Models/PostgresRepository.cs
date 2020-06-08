@@ -33,10 +33,5 @@ namespace WorkAndHolidayScraper.Models
             context.SaveChanges();
             return jobs;
         }
-
-        public IEnumerable<Job> GetAllJobs()
-        {
-            return context.Jobs;
-        }
     }
 }
