@@ -37,10 +37,5 @@ namespace WorkAndHolidayScraper.Models
         {
             return job;
         }
-
-        public IEnumerable<Job> GetAllJobs()
-        {
-            return jobList;
-        }
     }
 }

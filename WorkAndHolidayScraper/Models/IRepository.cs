@@ -7,7 +7,6 @@ namespace WorkAndHolidayScraper.Models
 {
     public interface IRepository
     {
-        IEnumerable<Job> GetAllJobs();
         Job AddJob(Job job);
         IEnumerable<Job> AddJobsFromList(List<Job> jobs);
     }
