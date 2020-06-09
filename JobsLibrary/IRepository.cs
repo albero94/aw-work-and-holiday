@@ -6,6 +6,6 @@ namespace JobsLibrary
     {
         Job AddJob(Job job);
         IEnumerable<Job> AddJobsFromList(List<Job> jobs);
-        IEnumerable<Job> GetJobs(int startIndex = 0);
+        IEnumerable<Job> GetJobs(int startIndex, int entriesPerPage);
     }
 }

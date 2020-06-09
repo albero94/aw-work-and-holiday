@@ -24,7 +24,7 @@ namespace JobsLibrary
 
         public IEnumerable<Job> AddJobsFromList(List<Job> jobs)
         {
-            foreach(var job in jobs)
+            foreach (var job in jobs)
             {
                 context.Jobs.Add(job);
             }
@@ -34,7 +34,9 @@ namespace JobsLibrary
 
         public IEnumerable<Job> GetJobs(int startIndex, int entriesPerPage)
         {
-            return context.Jobs.Skip(startIndex).Take(entriesPerPage);
+            return context.Jobs.OrderByDescending(job => job.Date)
+                .Skip(startIndex)
+                .Take(entriesPerPage);
         }
     }
 }

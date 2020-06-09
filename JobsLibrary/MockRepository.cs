@@ -36,7 +36,7 @@ namespace JobsLibrary
             return job;
         }
 
-        public IEnumerable<Job> GetJobs(int startIndex)
+        public IEnumerable<Job> GetJobs(int startIndex, int entriesPerPage)
         {
             throw new NotImplementedException();
         }
