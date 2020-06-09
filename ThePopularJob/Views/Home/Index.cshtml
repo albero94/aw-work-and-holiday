@@ -1,0 +1,48 @@
+﻿@model IEnumerable<JobsLibrary.Job>
+@{
+    ViewBag.Title = "Home Page";
+    int startIndex = ViewBag.StartIndex;
+    int jobEntriesPerPage = ViewBag.JobEntriesPerPage;
+}
+
+<div class="text-center">
+    <h1 class="display-4">The Popular Job</h1>
+    <h3>Your website for Work and Holiday jobs in Australia</h3>
+</div>
+
+<div>
+    @foreach (var job in Model)
+    {
+        <div class="card" style="margin-bottom:3em">
+            <div class="card-header"><h5>@job.Title</h5></div>
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(job.Company))
+                {
+                    <div>Company: @job.Company</div>
+                }
+                @if (!string.IsNullOrEmpty(job.Location))
+                {
+                    <div>Location: @job.Location</div>
+                }
+                <div>Date: @job.Date</div>
+                @if (!string.IsNullOrEmpty(job.Description))
+                {
+                    <div>Description: @job.Description</div>
+                }
+                <div>Original Website: @job.OriginalWebsite</div>
+                @if (!string.IsNullOrEmpty(job.Salary))
+                {
+                    <div>Salary: @job.Salary</div>
+                }
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-primary mt-2" href="@job.Href" target="_blank">Apply</a>
+            </div>
+        </div>
+    }
+    @if (startIndex >= 20)
+    {
+        <a class="btn btn-primary mr-3" asp-route-startIndex="@(startIndex + jobEntriesPerPage)">Previous</a>
+    }
+    <a class="btn btn-primary" asp-route-startIndex="@(startIndex + jobEntriesPerPage)">Next</a>
+</div>

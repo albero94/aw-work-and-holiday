@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkAndHolidayScraper", "Wo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkAndHolidayScraperTests", "WorkAndHolidayScraperTests\WorkAndHolidayScraperTests.csproj", "{68884BB9-6554-417D-8324-80CF48F02051}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThePopularJobWebAPI", "ThePopularJobWebAPI\ThePopularJobWebAPI.csproj", "{0661B3A1-C759-4EC2-88A7-3A4BB38F526D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsLibrary", "JobsLibrary\JobsLibrary.csproj", "{52D158AC-8AB9-402C-B9BF-EB90415F67F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsLibrary", "JobsLibrary\JobsLibrary.csproj", "{52D158AC-8AB9-402C-B9BF-EB90415F67F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThePopularJob", "ThePopularJob\ThePopularJob.csproj", "{8B62A263-2E15-47FE-AB2E-6AF6534EAF57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +25,14 @@ Global
 		{68884BB9-6554-417D-8324-80CF48F02051}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68884BB9-6554-417D-8324-80CF48F02051}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68884BB9-6554-417D-8324-80CF48F02051}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0661B3A1-C759-4EC2-88A7-3A4BB38F526D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0661B3A1-C759-4EC2-88A7-3A4BB38F526D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0661B3A1-C759-4EC2-88A7-3A4BB38F526D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0661B3A1-C759-4EC2-88A7-3A4BB38F526D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{52D158AC-8AB9-402C-B9BF-EB90415F67F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{52D158AC-8AB9-402C-B9BF-EB90415F67F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52D158AC-8AB9-402C-B9BF-EB90415F67F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52D158AC-8AB9-402C-B9BF-EB90415F67F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B62A263-2E15-47FE-AB2E-6AF6534EAF57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B62A263-2E15-47FE-AB2E-6AF6534EAF57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B62A263-2E15-47FE-AB2E-6AF6534EAF57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B62A263-2E15-47FE-AB2E-6AF6534EAF57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
