@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using JobsLibrary;
+using Microsoft.AspNetCore.Identity;
 
 namespace ThePopularJob
 {
@@ -25,6 +26,13 @@ namespace ThePopularJob
             services.AddScoped<IRepository, PostgresRepository>();
             services.AddDbContextPool<AppDbContext>(options =>
                     options.UseNpgsql(Configuration.GetConnectionString("DefaultString")));
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            }).AddEntityFrameworkStores<AppDbContext>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +53,7 @@ namespace ThePopularJob
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
