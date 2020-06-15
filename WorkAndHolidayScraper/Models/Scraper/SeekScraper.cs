@@ -5,9 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using WorkAndHolidayScraper.Models.Scraper;
+using JobsLibrary;
 
 namespace WorkAndHolidayScraper.Models.Scraper
 {

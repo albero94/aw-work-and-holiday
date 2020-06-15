@@ -3,8 +3,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WorkAndHolidayScraper.Models;
 using WorkAndHolidayScraper.Models.Scraper;
+using JobsLibrary;
 
 namespace WorkAndHolidayScraper.Controllers
 {

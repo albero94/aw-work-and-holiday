@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using Microsoft.Extensions.Logging;
 using System.Text.RegularExpressions;
-using Microsoft.Extensions.Primitives;
+using JobsLibrary;
 
 namespace WorkAndHolidayScraper.Models.Scraper
 {

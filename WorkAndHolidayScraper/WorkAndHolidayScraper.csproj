@@ -6,16 +6,10 @@
     <UserSecretsId>6eb4ba2f-bf12-470b-bb27-7bf55bf8941c</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Migrations\20200604012935_Init.cs" />
-    <Compile Remove="Migrations\20200604012935_Init.Designer.cs" />
+    <PackageReference Include="AngleSharp" Version="1.0.0-alpha-822" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="1.0.0-alpha-822" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
+    <ProjectReference Include="..\JobsLibrary\JobsLibrary.csproj" />
   </ItemGroup>
 </Project>
