@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using WorkAndHolidayScraper.Models;
 using WorkAndHolidayScraper.Models.Scraper;
+using JobsLibrary;
 
 namespace WorkAndHolidayScraper
 {
