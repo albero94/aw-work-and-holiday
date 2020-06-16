@@ -1,4 +1,4 @@
-﻿@model IEnumerable<JobsLibrary.Job>
+﻿@model IEnumerable<JobViewModel>
 @{
     ViewBag.Title = "Home Page";
     int startIndex = ViewBag.StartIndex;
@@ -16,7 +16,7 @@
         <div class="card" style="margin-bottom:3em">
             <div class="card-header d-flex justify-content-between">
                 <h5>@job.Title</h5>
-                <span>@job.Date</span>
+                <span style="min-width:55px">@job.TimeAgo</span>
             </div>
             <div class="card-body child-margin-1">
                 @if (!string.IsNullOrEmpty(job.Company))
