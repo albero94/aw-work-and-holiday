@@ -5,34 +5,35 @@
     int jobEntriesPerPage = ViewBag.JobEntriesPerPage;
 }
 
-<div class="text-center">
-    <h1 class="display-4">The Popular Job</h1>
-    <h3>Your website for Work and Holiday jobs in Australia</h3>
-</div>
+@*<div class="text-center">
+        <h1 class="display-4">The Popular Job</h1>
+        <h3>Your website for Work and Holiday jobs in Australia</h3>
+    </div>*@
 
 <div>
     @foreach (var job in Model)
     {
         <div class="card" style="margin-bottom:3em">
-            <div class="card-header"><h5>@job.Title</h5></div>
-            <div class="card-body">
+            <div class="card-header d-flex justify-content-between">
+                <h5>@job.Title</h5>
+                <span>@job.Date</span>
+            </div>
+            <div class="card-body child-margin-1">
                 @if (!string.IsNullOrEmpty(job.Company))
                 {
-                    <div>Company: @job.Company</div>
+                    <div><i class="fa fa-building"></i> @job.Company</div>
                 }
                 @if (!string.IsNullOrEmpty(job.Location))
                 {
-                    <div>Location: @job.Location</div>
+                    <div><i class="fa fa-map-marker"></i> @job.Location</div>
                 }
-                <div>Date: @job.Date</div>
                 @if (!string.IsNullOrEmpty(job.Description))
                 {
-                    <div>Description: @job.Description</div>
+                    <div>@job.Description</div>
                 }
-                <div>Original Website: @job.OriginalWebsite</div>
                 @if (!string.IsNullOrEmpty(job.Salary))
                 {
-                    <div>Salary: @job.Salary</div>
+                    <div><i class="fa fa-usd"></i> @job.Salary</div>
                 }
             </div>
             <div class="card-footer">

@@ -28,6 +28,7 @@ namespace ThePopularJob.Controllers
             var jobs = repository.GetJobs(startIndex, jobEntriesPerPage);
             ViewBag.StartIndex = startIndex;
             ViewBag.JobEntriesPerPage = jobEntriesPerPage;
+            ViewBag.ShowBanner = true;
             return View(jobs);
         }
 
