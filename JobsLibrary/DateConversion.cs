@@ -55,5 +55,20 @@ namespace JobsLibrary
             }
             catch { return null; }
         }
+
+        public static string DateTimeToTimeAgo(DateTime? date)
+        {
+            if (date == null) return "";
+
+            var dayDifference = (DateTime.Today - date.Value).TotalDays;
+
+            if (dayDifference >= 31)
+                return "+30d ago";
+            if (dayDifference >= 1 && dayDifference < 31)
+                return $"{dayDifference}d ago";
+            if (dayDifference < 1)
+                return $"{(int)( dayDifference * 24)}h ago";
+            return "";
+        }
     }
 }
