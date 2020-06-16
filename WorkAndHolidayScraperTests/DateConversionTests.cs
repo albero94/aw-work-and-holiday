@@ -64,7 +64,7 @@ namespace WorkAndHolidayScraperTests
         [InlineData("2h")]
         public void DaysAgoStringToDate_DaysAgo_ReturnsDate(string candidate)
         {
-            var result = DateConversion.DaysHoursAgoStringToDate(candidate);
+            var result = DateConversion.TimeAgoStringToDate(candidate);
             Assert.IsType<DateTime>(result);
         }
 
@@ -74,7 +74,7 @@ namespace WorkAndHolidayScraperTests
         [InlineData("Dec 21")]
         public void DaysAgoStringToDate_NotDaysAgo_ReturnsNull(string candidate)
         {
-            var result = DateConversion.DaysHoursAgoStringToDate(candidate);
+            var result = DateConversion.TimeAgoStringToDate(candidate);
             Assert.Null(result);
         }
         #endregion

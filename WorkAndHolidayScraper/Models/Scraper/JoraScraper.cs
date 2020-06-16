@@ -35,7 +35,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
                     entry.Company = jobRow.QuerySelector(".company")?.InnerHtml;
                     entry.Location = jobRow.QuerySelector(".location") .InnerHtml;
                     entry.Description = jobRow.QuerySelector(".summary") .InnerHtml;
-                    entry.Date = DateConversion.DaysHoursAgoStringToDate(jobRow.QuerySelector(".date") .InnerHtml);
+                    entry.Date = DateConversion.TimeAgoStringToDate(jobRow.QuerySelector(".date") .InnerHtml);
 
                     if (IsValidEntry(entry)) jobRowEntries.Add(entry);
                 }
