@@ -38,12 +38,19 @@ namespace ThePopularJob.Controllers
             {
                 var result = await signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, lockoutOnFailure: false);
 
-                if (result.Succeeded) 
+                if (result.Succeeded)
                     return RedirectToAction("Index", "Home");
 
                 ModelState.AddModelError("", "Invalid Login Attempt");
             }
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -63,7 +70,7 @@ namespace ThePopularJob.Controllers
                 if (result.Succeeded)
                 {
                     // send confirmation link
-                    RedirectToRegistrationMessageView();
+                    return RedirectToRegistrationMessageView();
                 }
                 PrintModelErrors(result.Errors);
             }
