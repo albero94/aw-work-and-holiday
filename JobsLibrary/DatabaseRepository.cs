@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace JobsLibrary
 {
-    public class PostgresRepository : IRepository
+    public class DatabaseRepository : IRepository
     {
         private readonly AppDbContext context;
-        private readonly ILogger<PostgresRepository> logger;
+        private readonly ILogger<DatabaseRepository> logger;
 
-        public PostgresRepository(AppDbContext context,
-            ILogger<PostgresRepository> logger)
+        public DatabaseRepository(AppDbContext context,
+            ILogger<DatabaseRepository> logger)
         {
             this.context = context;
             this.logger = logger;

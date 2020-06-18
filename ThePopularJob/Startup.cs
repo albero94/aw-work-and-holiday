@@ -23,7 +23,7 @@ namespace ThePopularJob
         {
             services.AddControllersWithViews();
             services.AddLogging();
-            services.AddScoped<IRepository, PostgresRepository>();
+            services.AddScoped<IRepository, DatabaseRepository>();
             services.AddDbContextPool<AppDbContext>(options =>
                     options.UseNpgsql(Configuration.GetConnectionString("DefaultString")));
             services.AddIdentity<IdentityUser, IdentityRole>(options =>

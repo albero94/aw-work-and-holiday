@@ -25,7 +25,7 @@ namespace WorkAndHolidayScraper
             services.AddControllers();
             services.AddLogging();
             //services.AddSingleton<IRepository, MockRepository>();
-            services.AddScoped<IRepository, PostgresRepository>();
+            services.AddScoped<IRepository, DatabaseRepository>();
             services.AddScoped<ScraperFactory>();
             AddScraperServices(services);
 
