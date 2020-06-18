@@ -12,25 +12,6 @@ namespace JobsLibrary
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Job> Jobs { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Job>().HasData(
-                new Job
-                {
-                    Id = Guid.NewGuid(),
-                    Title = "Test title",
-                    Company = "Test company",
-                    Date = DateTime.Now,
-                    Description = "Test description",
-                    Href = "www.google.com",
-                    Location = "Australia",
-                    Salary = "a lot :)",
-                    OriginalWebsite = "Test",
-                }
-            );
-        }
     }
 
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
@@ -43,7 +24,8 @@ namespace JobsLibrary
                 .Build();
             var builder = new DbContextOptionsBuilder<AppDbContext>();
             var connectionString = configuration.GetConnectionString("DefaultString");
-            builder.UseNpgsql(connectionString);
+            //builder.UseNpgsql(connectionString);
+            builder.UseSqlServer(connectionString);
             return new AppDbContext(builder.Options);
         }
     }

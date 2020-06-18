@@ -25,12 +25,13 @@ namespace ThePopularJob
             services.AddLogging();
             services.AddScoped<IRepository, DatabaseRepository>();
             services.AddDbContextPool<AppDbContext>(options =>
-                    options.UseNpgsql(Configuration.GetConnectionString("DefaultString")));
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultString")));
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
+                options.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<AppDbContext>();
 
         }

@@ -60,7 +60,7 @@ namespace JobsLibrary
         {
             if (date == null) return "";
 
-            var dayDifference = (DateTime.Today - date.Value).TotalDays;
+            var dayDifference = (DateTime.Now - date.Value).TotalDays;
 
             if (dayDifference >= 31)
                 return "+30d ago";

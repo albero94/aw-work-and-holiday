@@ -1,18 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace JobsLibrary.Migrations
 {
-    public partial class IdentityTables : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "job",
-                keyColumn: "id",
-                keyValue: new Guid("396741ca-d70d-4903-b40e-6a337ee8691f"));
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -53,11 +47,30 @@ namespace JobsLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Job",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    Company = table.Column<string>(nullable: true),
+                    Location = table.Column<string>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    Href = table.Column<string>(nullable: true),
+                    OriginalWebsite = table.Column<string>(nullable: true),
+                    Salary = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Job", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -78,7 +91,7 @@ namespace JobsLibrary.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -159,9 +172,9 @@ namespace JobsLibrary.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "job",
-                columns: new[] { "id", "company", "date", "description", "href", "location", "original_website", "salary", "title" },
-                values: new object[] { new Guid("ce529784-c7ab-4989-ae70-d069fcca8952"), "Test company", new DateTime(2020, 6, 15, 19, 35, 50, 762, DateTimeKind.Local).AddTicks(8236), "Test description", "www.google.com", "Australia", "Test", "a lot :)", "Test title" });
+                table: "Job",
+                columns: new[] { "Id", "Company", "Date", "Description", "Href", "Location", "OriginalWebsite", "Salary", "Title" },
+                values: new object[] { new Guid("1ca7b32b-6c90-4dca-8231-ac23e8f12de7"), "Test company", new DateTime(2020, 6, 18, 9, 10, 6, 831, DateTimeKind.Local).AddTicks(1629), "Test description", "www.google.com", "Australia", "Test", "a lot :)", "Test title" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -172,7 +185,8 @@ namespace JobsLibrary.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -198,7 +212,8 @@ namespace JobsLibrary.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -219,20 +234,13 @@ namespace JobsLibrary.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Job");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DeleteData(
-                table: "job",
-                keyColumn: "id",
-                keyValue: new Guid("ce529784-c7ab-4989-ae70-d069fcca8952"));
-
-            migrationBuilder.InsertData(
-                table: "job",
-                columns: new[] { "id", "company", "date", "description", "href", "location", "original_website", "salary", "title" },
-                values: new object[] { new Guid("396741ca-d70d-4903-b40e-6a337ee8691f"), "Test company", new DateTime(2020, 6, 15, 8, 56, 40, 578, DateTimeKind.Local).AddTicks(3946), "Test description", "www.google.com", "Australia", "Test", "a lot :)", "Test title" });
         }
     }
 }
