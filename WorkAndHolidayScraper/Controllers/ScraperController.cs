@@ -56,9 +56,10 @@ namespace WorkAndHolidayScraper.Controllers
             {
                 Scraper? scraper = scraperFactory.GetScraper(scraperName);
                 if (scraper == null) continue;
-                tasks.Add(scraper.Run());
+                //tasks.Add(scraper.Run());
+                await scraper.Run();
             }
-            await Task.WhenAll(tasks);
+            //await Task.WhenAll(tasks);
 
             var totalTime = DateTime.Now - startTime;
             var message = $"You are done! All sites were scraped. Time spent: {totalTime.Duration()})";
