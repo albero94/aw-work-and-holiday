@@ -46,7 +46,7 @@
     }
     @if (Model.StartIndex >= 20)
     {
-        <a class="btn btn-primary mr-3" asp-route-startIndex="@(Model.StartIndex + Model.JobsPerPage)">Previous</a>
+        <a class="btn btn-primary mr-3" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex + Model.JobsPerPage)">Previous</a>
     }
-    <a class="btn btn-primary" asp-route-startIndex="@(Model.StartIndex + Model.JobsPerPage)">Next</a>
+    <a class="btn btn-primary" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex + Model.JobsPerPage)">Next</a>
 </div>

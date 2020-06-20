@@ -26,7 +26,7 @@ namespace ThePopularJob.Controllers
 
         public IActionResult Index(int startIndex)
         {
-            var jobs = repository.GetJobs(startIndex, jobsPerPage);
+            var jobs = repository.GetJobs(startIndex, 5);
 
             var model = new ListJobsViewModel();
             model.StartIndex = startIndex;

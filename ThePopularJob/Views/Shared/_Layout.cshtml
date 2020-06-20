@@ -51,11 +51,10 @@
                                 <li class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" asp-action="Logout" asp-controller="Account">Logout</a>
                                 </li>
-                            </ul>*@
+                            <ton/ul>*@
                     }
                     else
                     {
-
                         <ul class="navbar-nav d-flex ml-auto">
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
@@ -69,7 +68,7 @@
             </div>
         </nav>
     </header>
-    @if (ViewBag.ShowBanner == true)
+    @if (Html.ViewContext.View.Path.Contains("Index"))
     {
         <div class="text-center banner">
             <h1 class="display-4">The Popular Job</h1>
@@ -77,8 +76,12 @@
             <button class="btn btn-info">Call to Action</button>
         </div>
     }
+    else
+    {
+        <div class="mt-5"></div>
+    }
 
-    <div class="container">
+    <div class="container" style="max-width:1000px">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
