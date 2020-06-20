@@ -15,7 +15,7 @@ namespace ThePopularJob.Controllers
     {
         private readonly ILogger<HomeController> logger;
         private readonly IRepository repository;
-        private readonly int jobEntriesPerPage = 20;
+        private readonly int jobsPerPage = 20;
 
         public HomeController(ILogger<HomeController> logger,
                 IRepository repository)
@@ -26,13 +26,15 @@ namespace ThePopularJob.Controllers
 
         public IActionResult Index(int startIndex)
         {
-            var jobs = repository.GetJobs(startIndex, jobEntriesPerPage);
+            var jobs = repository.GetJobs(startIndex, jobsPerPage);
 
-            var model = new List<JobViewModel>();
+            var model = new ListJobsViewModel();
+            model.StartIndex = startIndex;
+            model.JobsPerPage = jobsPerPage;
 
-            foreach(var job in jobs)
+            foreach (var job in jobs)
             {
-                model.Add(new JobViewModel
+                model.Jobs.Add(new JobViewModel
                 {
                     Title = job.Title,
                     TimeAgo = DateConversion.DateTimeToTimeAgo(job.Date),
@@ -44,8 +46,35 @@ namespace ThePopularJob.Controllers
                 });
             }
 
-            ViewBag.StartIndex = startIndex;
-            ViewBag.JobEntriesPerPage = jobEntriesPerPage;
+            ViewBag.ShowBanner = true;
+            return View(model);
+        }
+
+        public IActionResult ListJobs(string searchString, int startIndex)
+        {
+
+            var jobs = string.IsNullOrEmpty(searchString) ?
+                repository.GetJobs(startIndex, jobsPerPage) :
+                repository.GetFilteredJobs(searchString, startIndex, jobsPerPage);
+
+            var model = new ListJobsViewModel();
+            model.StartIndex = startIndex;
+            model.JobsPerPage = jobsPerPage;
+
+            foreach (var job in jobs)
+            {
+                model.Jobs.Add(new JobViewModel
+                {
+                    Title = job.Title,
+                    TimeAgo = DateConversion.DateTimeToTimeAgo(job.Date),
+                    Company = job.Company,
+                    Description = job.Description,
+                    Href = job.Href,
+                    Location = job.Location,
+                    Salary = job.Salary
+                });
+            }
+
             ViewBag.ShowBanner = true;
             return View(model);
         }

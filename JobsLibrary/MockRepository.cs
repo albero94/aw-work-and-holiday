@@ -40,5 +40,10 @@ namespace JobsLibrary
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Job> GetFilteredJobs(string serachString, int startIndex, int entriesPerPage)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

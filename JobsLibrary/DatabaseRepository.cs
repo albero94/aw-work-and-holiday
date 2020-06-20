@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,6 +31,14 @@ namespace JobsLibrary
             }
             context.SaveChanges();
             return jobs;
+        }
+
+        public IEnumerable<Job> GetFilteredJobs(string serachString, int startIndex, int entriesPerPage)
+        {
+            return context.Jobs.Where(j => j.Title.Contains(serachString))
+                .OrderByDescending(job => job.Date)
+                .Skip(startIndex)
+                .Take(entriesPerPage);
         }
 
         public IEnumerable<Job> GetJobs(int startIndex, int entriesPerPage)

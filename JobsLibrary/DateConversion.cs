@@ -65,7 +65,7 @@ namespace JobsLibrary
             if (dayDifference >= 31)
                 return "+30d ago";
             if (dayDifference >= 1 && dayDifference < 31)
-                return $"{dayDifference}d ago";
+                return $"{(int)dayDifference}d ago";
             if (dayDifference < 1)
                 return $"{(int)( dayDifference * 24)}h ago";
             return "";
