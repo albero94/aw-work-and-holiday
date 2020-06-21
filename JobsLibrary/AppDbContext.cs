@@ -20,10 +20,10 @@ namespace JobsLibrary
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile(@Directory.GetCurrentDirectory() + "/../ThePopularJob/appsettings.json")
+                .AddJsonFile("C:/Users/ealbe/AppData/Roaming/Microsoft/UserSecrets/3b84574c-812e-4318-b973-2237f0595259/secrets.json")
                 .Build();
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            var connectionString = configuration.GetConnectionString("DefaultString");
+            var connectionString = configuration.GetConnectionString("AzureDatabase");
             //builder.UseNpgsql(connectionString);
             builder.UseSqlServer(connectionString);
             return new AppDbContext(builder.Options);
