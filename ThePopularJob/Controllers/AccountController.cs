@@ -89,7 +89,8 @@ namespace ThePopularJob.Controllers
         private IActionResult RedirectToRegistrationMessageView()
         {
             ViewBag.ErrorTitle = "Registration successful";
-            ViewBag.ErrorMessage = "Before you can login, please confirm your email by clicking on the confirmatoin link we have sent you";
+            //ViewBag.ErrorMessage = "Before you can login, please confirm your email by clicking on the confirmatoin link we have sent you";
+            ViewBag.ErrorMessage = "Welcome to The Popular Job! You can now login with your username and password.";
             return View("Error");
         }
     }

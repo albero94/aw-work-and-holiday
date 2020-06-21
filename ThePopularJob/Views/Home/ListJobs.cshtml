@@ -44,15 +44,15 @@
         </div>
     }
 
-<div class="d-flex justify-content-between mx-auto" style="width:400px">
-    @if (Model.StartIndex >= 20)
-    {
-        <a class="btn btn-info mr-3" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex - Model.JobsPerPage)">Previous</a>
-    }
-    else
-    {
-        <a class="btn btn-info mr-3 disabled" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex - Model.JobsPerPage)">Previous</a>
-    }
-    <a class="btn btn-info" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex + Model.JobsPerPage)">Next</a>
-</div>
+    <div class="d-flex justify-content-between mx-auto" style="width:400px">
+        @if (Model.StartIndex >= 20)
+        {
+            <a class="btn btn-info mr-3" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex - Model.JobsPerPage)">Previous</a>
+        }
+        else
+        {
+            <a class="btn btn-info mr-3 disabled" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex - Model.JobsPerPage)">Previous</a>
+        }
+        <a class="btn btn-info" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex + Model.JobsPerPage)">Next</a>
+    </div>
 </div>
