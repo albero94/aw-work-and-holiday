@@ -3,15 +3,15 @@
     ViewBag.Title = "Home Page";
 }
 
-    <form asp-action="ListJobs" method="get" class="input-group mb-5 col-md-8 mx-auto">
-        <input type="hidden" asp-for="StartIndex" />
-        <input type="text" asp-for="SearchString" class="form-control" placeholder="Search..." />
-        <button class="input-group-append border-0 p-0">
-            <span class="input-group-text" style="height:100%">
-                <i class="fa fa-search"></i>
-            </span>
-        </button>
-    </form>
+<form asp-action="ListJobs" method="get" class="input-group mb-5 col-md-8 mx-auto">
+    <input type="hidden" asp-for="StartIndex" />
+    <input type="text" asp-for="SearchString" class="form-control" placeholder="Search..." />
+    <button class="input-group-append border-0 p-0">
+        <span class="input-group-text" style="height:100%">
+            <i class="fa fa-search"></i>
+        </span>
+    </button>
+</form>
 
 <div>
     @foreach (var job in Model.Jobs)
@@ -44,9 +44,11 @@
             </div>
         </div>
     }
-    @if (Model.StartIndex >= 20)
-    {
-        <a class="btn btn-primary mr-3" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex + Model.JobsPerPage)">Previous</a>
-    }
-    <a class="btn btn-primary" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex + Model.JobsPerPage)">Next</a>
+    <div class="d-flex justify-content-between mx-auto" style="width:400px">
+        @if (Model.StartIndex >= 20)
+        {
+            <a class="btn btn-info mr-3" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex + Model.JobsPerPage)">Previous</a>
+        }
+        <a class="btn btn-info" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex + Model.JobsPerPage)">Next</a>
+    </div>
 </div>

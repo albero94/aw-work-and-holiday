@@ -60,6 +60,7 @@ namespace ThePopularJob.Controllers
             var model = new ListJobsViewModel();
             model.StartIndex = startIndex;
             model.JobsPerPage = jobsPerPage;
+            model.SearchString = searchString;
 
             foreach (var job in jobs)
             {
