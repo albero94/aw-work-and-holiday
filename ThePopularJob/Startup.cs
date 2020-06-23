@@ -25,7 +25,7 @@ namespace ThePopularJob
             services.AddLogging();
             services.AddScoped<IRepository, DatabaseRepository>();
             services.AddDbContextPool<AppDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("AzureDatabase")));
+                    options.UseSqlServer(Configuration.GetConnectionString("PostgresDatabase")));
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = false;

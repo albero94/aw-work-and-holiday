@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using System;
+using Microsoft.AspNetCore.Identity;
 using System.IO;
 
 namespace JobsLibrary
@@ -12,6 +12,18 @@ namespace JobsLibrary
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Job> Jobs { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<IdentityUser>(entity => entity.ToTable(name: "user"));
+            builder.Entity<IdentityRole>(entity => entity.ToTable(name: "role"));
+            builder.Entity<IdentityUserRole<string>>(entity => entity.ToTable("user_role"));
+            builder.Entity<IdentityUserClaim<string>>(entity => entity.ToTable("user_claim"));
+            builder.Entity<IdentityUserLogin<string>>(entity => entity.ToTable("user_login"));
+            builder.Entity<IdentityRoleClaim<string>>(entity => entity.ToTable("role_claim"));
+            builder.Entity<IdentityUserToken<string>>(entity => entity.ToTable("user_token"));
+        }
     }
 
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
@@ -20,12 +32,12 @@ namespace JobsLibrary
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("C:/Users/ealbe/AppData/Roaming/Microsoft/UserSecrets/3b84574c-812e-4318-b973-2237f0595259/secrets.json")
+                .AddJsonFile(Directory.GetCurrentDirectory() + "/../ThePopularJob/appsettings.json")
                 .Build();
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            var connectionString = configuration.GetConnectionString("AzureDatabase");
-            //builder.UseNpgsql(connectionString);
-            builder.UseSqlServer(connectionString);
+            var connectionString = configuration.GetConnectionString("PostgresDatabase");
+            builder.UseNpgsql(connectionString);
+            //builder.UseSqlServer(connectionString);
             return new AppDbContext(builder.Options);
         }
     }
