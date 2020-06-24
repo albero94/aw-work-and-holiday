@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using JobsLibrary;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.HttpOverrides;
+using System.Net;
 
 namespace ThePopularJob
 {
@@ -25,7 +27,7 @@ namespace ThePopularJob
             services.AddLogging();
             services.AddScoped<IRepository, DatabaseRepository>();
             services.AddDbContextPool<AppDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("PostgresDatabase")));
+                    options.UseNpgsql(Configuration.GetConnectionString("PostgresDatabase")));
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -34,6 +36,10 @@ namespace ThePopularJob
                 options.User.RequireUniqueEmail = true;
             }).AddEntityFrameworkStores<AppDbContext>();
 
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.KnownProxies.Add(IPAddress.Parse("10.0.0.100"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +55,12 @@ namespace ThePopularJob
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
