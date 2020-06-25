@@ -73,9 +73,7 @@ namespace WorkAndHolidayScraper.Controllers
 
         public ActionResult Index()
         {
-            logger.LogTrace("Retrieving all jobs in the database");
-            //return Ok(repository.GetAllJobs());
-            return Ok();
+            return Ok("This is your job scraper!");
         }
 
 
