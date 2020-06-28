@@ -12,8 +12,8 @@ namespace WorkAndHolidayScraper.Models.Scraper
     public class IndeedScraper : Scraper
     {
         private readonly string WebsiteName = "Indeed";
-        private readonly int JobNumberLimit = 210;
-        private static readonly string url = "https://au.indeed.com/jobs?q=working+holiday+visa&l=";
+        private int JobNumberLimit;
+        private static readonly string url = "https://au.indeed.com/working-holiday-visa-jobs";
         public IndeedScraper(IRepository repository, ILogger<IndeedScraper> logger) :
             base(repository, logger, url)
         {
@@ -25,6 +25,8 @@ namespace WorkAndHolidayScraper.Models.Scraper
 
         protected override void ExtractDataFromDocument(IDocument document, List<Job> jobRowEntries)
         {
+            JobNumberLimit = TotalJobsCount(
+                ((IHtmlElement)document.QuerySelector("#searchCountPages")).TextContent);
             var rows = document.QuerySelectorAll(".result");
             foreach (var jobRow in rows)
             {
@@ -49,6 +51,12 @@ namespace WorkAndHolidayScraper.Models.Scraper
             }
             logger.LogTrace("Data extracted from document.");
             return;
+        }
+
+        private int TotalJobsCount(string searchCount)
+        {
+            try { return int.Parse(searchCount.Split(" ")[^2]); }
+            catch { return 0; }
         }
 
         protected override string? getNextLinkUrl(IDocument document)
