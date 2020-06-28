@@ -18,24 +18,25 @@ namespace WorkAndHolidayScraper.Models.Scraper
         }
 
         protected override bool DocumentIsEmpty(IDocument document) =>
-            document.QuerySelectorAll(".result").Count() == 0;
+            document.QuerySelectorAll("article").Count() == 0;
 
         protected override void ExtractDataFromDocument(IDocument document, List<Job> jobRowEntries)
         {
-            var rows = document.QuerySelectorAll(".result");
+            var rows = document.QuerySelectorAll("article");
             foreach (var jobRow in rows)
             {
+                if (jobRow.QuerySelector("section").Children.Length != 4) continue;
                 Job entry = new Job() { OriginalWebsite = WebsiteName };
 
                 try
                 {
                     entry.Title = ((IHtmlAnchorElement)jobRow.QuerySelector("a")).Text;
                     entry.Href = ((IHtmlAnchorElement)jobRow.QuerySelector("a")).Href;
-                    entry.Company = ((IHtmlElement)jobRow.QuerySelector(".company_region"))?.TextContent;
-                    entry.Location = ((IHtmlElement)jobRow.QuerySelector(".date_add-location__region"))?.TextContent;
-                    entry.Description = ((IHtmlElement)jobRow.QuerySelector(".desc")).TextContent.Replace('\n', ' ');
+                    entry.Company = jobRow.QuerySelector("section").Children[0].TextContent;
+                    entry.Location = jobRow.QuerySelector("section").Children[2].TextContent;
+                    entry.Description = jobRow.QuerySelector("section").Children[1].TextContent.Replace('\n', ' ');
                     entry.Date = DateConversion.TimeAgoStringToDate(
-                        ((IHtmlElement)jobRow.QuerySelector(".date_add-location__date"))?.TextContent);
+                        jobRow.QuerySelector("section").Children[3].TextContent);
 
                     if (IsValidEntry(entry)) jobRowEntries.Add(entry);
                 }
