@@ -62,7 +62,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
 
         protected abstract bool DocumentIsEmpty(IDocument document);
 
-        protected bool IsValidEntry(Job entry) =>
+        protected virtual bool IsValidEntry(Job entry) =>
             !string.IsNullOrEmpty(entry.Title) && !string.IsNullOrEmpty(entry.Href);
     }
 }

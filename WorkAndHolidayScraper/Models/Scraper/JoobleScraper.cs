@@ -51,13 +51,8 @@ namespace WorkAndHolidayScraper.Models.Scraper
 
         protected override string? getNextLinkUrl(IDocument document) => null;
 
-        private bool NextLinkExists(IDocument document, string newUrl)
-        {
-            return document.QuerySelectorAll(".paging a").Any(aElement =>
-            {
-                return ((IHtmlAnchorElement)aElement).Href == newUrl;
-            });
-        }
+        protected override bool IsValidEntry(Job entry) =>
+            !string.IsNullOrEmpty(entry.Title) && !string.IsNullOrEmpty(entry.Href) && !entry.Title.Contains("China", StringComparison.CurrentCultureIgnoreCase);
     }
 
 
