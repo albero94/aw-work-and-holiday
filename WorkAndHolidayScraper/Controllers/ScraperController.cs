@@ -76,6 +76,5 @@ namespace WorkAndHolidayScraper.Controllers
             return Ok("This is your job scraper!");
         }
 
-
     }
 }

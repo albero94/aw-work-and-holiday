@@ -12,7 +12,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
     public class JoraScraper : Scraper
     {
         private readonly string WebsiteName = "Jora";
-        private static readonly string url = "https://au.jora.com/j?q=working+holiday+visa&l=&sp=homepage";
+        private static readonly string url = "https://au.jora.com/j?sp=search&q=working+holiday+visa&l=";
         public JoraScraper(IRepository repository, ILogger<JoraScraper> logger) :
             base(repository, logger, url)
         {
@@ -32,10 +32,10 @@ namespace WorkAndHolidayScraper.Models.Scraper
                 {
                     entry.Title = ((IHtmlAnchorElement)jobRow.QuerySelector("a")).Title;
                     entry.Href = ((IHtmlAnchorElement)jobRow.QuerySelector("a")).Href;
-                    entry.Company = jobRow.QuerySelector(".company")?.InnerHtml;
-                    entry.Location = jobRow.QuerySelector(".location") .InnerHtml;
-                    entry.Description = jobRow.QuerySelector(".summary") .InnerHtml;
-                    entry.Date = DateConversion.TimeAgoStringToDate(jobRow.QuerySelector(".date") .InnerHtml);
+                    entry.Company = jobRow.QuerySelector(".job-company")?.InnerHtml ?? jobRow.QuerySelector(".company")?.InnerHtml;
+                    entry.Location = jobRow.QuerySelector(".job-location")? .InnerHtml ?? jobRow.QuerySelector(".location")?.InnerHtml;
+                    entry.Description = jobRow.QuerySelector(".job-abstract")? .InnerHtml ?? jobRow.QuerySelector(".summary")?.InnerHtml;
+                    entry.Date = DateConversion.TimeAgoStringToDate(jobRow.QuerySelector(".job-listed-date")? .InnerHtml ?? jobRow.QuerySelector(".date")?.InnerHtml);
 
                     if (IsValidEntry(entry)) jobRowEntries.Add(entry);
                 }
@@ -48,7 +48,8 @@ namespace WorkAndHolidayScraper.Models.Scraper
             return;
         }
 
-        protected override string? getNextLinkUrl(IDocument document) =>
+        protected override string? getNextLinkUrl(IDocument document) => 
+            ((IHtmlAnchorElement)document.QuerySelector("a.next-page-button"))?.Href ??
             ((IHtmlAnchorElement)document.QuerySelector("a.next_page"))?.Href;
     }
 }
