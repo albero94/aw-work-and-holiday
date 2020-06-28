@@ -31,7 +31,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
                 try
                 {
                     entry.Title = ((IHtmlAnchorElement)jobRow.QuerySelector("a")).Text;
-                    entry.Href = ((IHtmlAnchorElement)jobRow.QuerySelector("a")).Href;
+                    entry.Href = ((IHtmlAnchorElement)jobRow.QuerySelector("a")).Href.Replace("jooble.org/m/", "jooble.org/");
                     entry.Company = jobRow.QuerySelector("section").Children[0].TextContent;
                     entry.Location = jobRow.QuerySelector("section").Children[2].TextContent;
                     entry.Description = jobRow.QuerySelector("section").Children[1].TextContent.Replace('\n', ' ');
