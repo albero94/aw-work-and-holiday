@@ -52,7 +52,10 @@ namespace WorkAndHolidayScraper.Models.Scraper
         protected override string? getNextLinkUrl(IDocument document) => null;
 
         protected override bool IsValidEntry(Job entry) =>
-            !string.IsNullOrEmpty(entry.Title) && !string.IsNullOrEmpty(entry.Href) && !entry.Title.Contains("China", StringComparison.CurrentCultureIgnoreCase);
+            !string.IsNullOrEmpty(entry.Title) &&
+            !string.IsNullOrEmpty(entry.Href) &&
+            !entry.Title.Contains("China", StringComparison.CurrentCultureIgnoreCase) &&
+            !entry.Location.Contains("China", StringComparison.CurrentCultureIgnoreCase);
     }
 
 
