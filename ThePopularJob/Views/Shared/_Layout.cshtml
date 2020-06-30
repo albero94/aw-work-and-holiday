@@ -25,6 +25,9 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>*@
                         <li class="nav-item">
+                            <a class="nav-link text-dark" target="_blank" href="http://blog.thepopularjob.com">Blog</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
@@ -73,10 +76,11 @@
         <div class="text-center banner">
             <h1 class="display-4">The Popular Job</h1>
             <h3>Your website for Work and Holiday jobs in Australia</h3>
-            <button class="btn btn-info">Call to Action</button>
+            <a asp-action="ListJobs" class="btn btn-info">View All Jobs</a>
         </div>
     }
-    else{ <div class="mt-5"></div> }
+    else
+    { <div class="mt-5"></div>}
 
     <div class="container" style="max-width:1000px">
         <main role="main" class="pb-3">
@@ -84,11 +88,38 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - ThePopularJob - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top footer">
+        <div class="container d-flex flex-wrap justify-content-around line-height-children-2em
+             margin-children-2em footer-children-width">
+            <div class="d-flex flex-column">
+                <h5>CONTACT</h5>
+                <a href="#">contact@thepopularjob.com</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Social Media Logos</a>
+                <a href="#">About The Popular Job</a>
+            </div>
+            <div class="d-flex flex-column">
+                <h5>LEGAL</h5>
+                <a href="#">Privacy</a>
+                <a href="#">Terms and Conditions</a>
+                <a href="#">Cookies Policy</a>
+            </div>
+            <div class="d-flex flex-column">
+                <h5>USERS</h5>
+                <a href="#">Register</a>
+                <a href="#">Sign In</a>
+                <a href="#">Blog</a>
+                <a href="#">Frequently Asked Questions</a>
+            </div>
+            <div class="d-flex flex-column">
+                <h5>EMPLOYERS</h5>
+                <a href="#">Register for Free</a>
+                <a href="#">Post a Job</a>
+                <a href="#">Products and Prices</a>
+            </div>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
