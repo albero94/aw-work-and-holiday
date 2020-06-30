@@ -55,7 +55,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
             !string.IsNullOrEmpty(entry.Title) &&
             !string.IsNullOrEmpty(entry.Href) &&
             !entry.Title.Contains("China", StringComparison.CurrentCultureIgnoreCase) &&
-            !entry.Location.Contains("China", StringComparison.CurrentCultureIgnoreCase);
+            (!entry.Location?.Contains("China", StringComparison.CurrentCultureIgnoreCase) ?? true);
     }
 
 
