@@ -26,28 +26,8 @@ namespace ThePopularJob.Controllers
 
         public IActionResult Index(int startIndex)
         {
-            var jobs = repository.GetJobs(startIndex, 5);
-
-            var model = new ListJobsViewModel();
-            model.StartIndex = startIndex;
-            model.JobsPerPage = jobsPerPage;
-
-            foreach (var job in jobs)
-            {
-                model.Jobs.Add(new JobViewModel
-                {
-                    Title = job.Title,
-                    TimeAgo = DateConversion.DateTimeToTimeAgo(job.Date),
-                    Company = job.Company,
-                    Description = job.Description,
-                    Href = job.Href,
-                    Location = job.Location,
-                    Salary = job.Salary
-                });
-            }
-
             ViewBag.ShowBanner = true;
-            return View(model);
+            return View();
         }
 
         public IActionResult ListJobs(string searchString, int startIndex)

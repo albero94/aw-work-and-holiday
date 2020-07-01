@@ -45,14 +45,15 @@
     }
 
     <div class="d-flex justify-content-between mx-auto" style="max-width:400px">
-        @if (Model.StartIndex >= 20)
-        {
-            <a class="btn btn-info mr-3" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex - Model.JobsPerPage)">Previous</a>
-        }
-        else
-        {
-            <a class="btn btn-info mr-3 disabled" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex - Model.JobsPerPage)">Previous</a>
-        }
-        <a class="btn btn-info" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex + Model.JobsPerPage)">Next</a>
+        @{ var disabledClass = Model.StartIndex >= 20 ? "" : "disabled";}
+
+        <a class="btn btn-info mr-3 @disabledClass" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex - Model.JobsPerPage)"
+           asp-route-searchString="@Model.SearchString">
+            Previous
+        </a>
+        <a class="btn btn-info" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex + Model.JobsPerPage)"
+           asp-route-searchString="@Model.SearchString">
+            Next
+        </a>
     </div>
 </div>

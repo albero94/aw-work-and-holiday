@@ -35,7 +35,7 @@ namespace JobsLibrary
 
         public IEnumerable<Job> GetFilteredJobs(string serachString, int startIndex, int entriesPerPage)
         {
-            return context.Jobs.Where(j => j.Title.Contains(serachString))
+            return context.Jobs.Where(j => j.Title.ToLower().Contains(serachString.ToLower()))
                 .OrderByDescending(job => job.Date)
                 .Skip(startIndex)
                 .Take(entriesPerPage);
