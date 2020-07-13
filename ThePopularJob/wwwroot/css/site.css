@@ -110,3 +110,15 @@ body {
 .child-margin-1 > *{
     margin-bottom: 1em;
 }
+
+.social-icons-section a{
+    color:black;
+}
+
+.blog-cards > *{
+    width: 200px;
+}
+
+.card-title{
+    text-align:center;
+}
