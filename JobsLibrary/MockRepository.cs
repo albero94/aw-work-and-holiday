@@ -45,5 +45,10 @@ namespace JobsLibrary
         {
             throw new NotImplementedException();
         }
+
+        public int GetJobsNumberForQuery(string searchString)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

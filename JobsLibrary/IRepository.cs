@@ -8,5 +8,6 @@ namespace JobsLibrary
         IEnumerable<Job> AddJobsFromList(List<Job> jobs);
         IEnumerable<Job> GetJobs(int startIndex, int entriesPerPage);
         IEnumerable<Job> GetFilteredJobs(string serachString, int startIndex, int entriesPerPage);
+        int GetJobsNumberForQuery(string searchString);
     }
 }

@@ -14,6 +14,8 @@ namespace ThePopularJob.ViewModels
         public string SearchString { get; set; }
         public int StartIndex { get; set; }
         public int JobsPerPage { get; set; }
+        public int JobsNumberForQuery { get; set; }
+        public string PageNumber { get; set; }
     }
 }
 

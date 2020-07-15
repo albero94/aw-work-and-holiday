@@ -26,12 +26,12 @@ namespace ThePopularJob.Controllers
 
         public IActionResult Index(int startIndex)
         {
-            ViewBag.ShowBanner = true;
             return View();
         }
 
         public IActionResult ListJobs(string searchString, int startIndex)
         {
+            var jobsNumber = repository.GetJobsNumberForQuery(searchString);
 
             var jobs = string.IsNullOrEmpty(searchString) ?
                 repository.GetJobs(startIndex, jobsPerPage) :
@@ -41,6 +41,9 @@ namespace ThePopularJob.Controllers
             model.StartIndex = startIndex;
             model.JobsPerPage = jobsPerPage;
             model.SearchString = searchString;
+            model.JobsNumberForQuery = jobsNumber;
+            model.PageNumber = $"Page {startIndex / jobsPerPage + 1} of " +
+                $"{Math.Ceiling( jobsNumber / (float)jobsPerPage)}";
 
             foreach (var job in jobs)
             {
@@ -56,7 +59,6 @@ namespace ThePopularJob.Controllers
                 });
             }
 
-            ViewBag.ShowBanner = true;
             return View(model);
         }
 

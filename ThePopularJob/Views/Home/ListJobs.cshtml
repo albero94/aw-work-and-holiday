@@ -12,6 +12,10 @@
     </button>
 </form>
 
+<div class="text-center mb-3">
+    @Model.JobsNumberForQuery jobs were found
+</div>
+
 <div>
     @foreach (var job in Model.Jobs)
     {
@@ -47,10 +51,11 @@
     <div class="d-flex justify-content-between mx-auto" style="max-width:400px">
         @{ var disabledClass = Model.StartIndex >= 20 ? "" : "disabled";}
 
-        <a class="btn btn-info mr-3 @disabledClass" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex - Model.JobsPerPage)"
+        <a class="btn btn-info @disabledClass" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex - Model.JobsPerPage)"
            asp-route-searchString="@Model.SearchString">
             Previous
         </a>
+        <span class="btn">@Model.PageNumber</span>
         <a class="btn btn-info" asp-action="ListJobs" asp-route-startIndex="@(Model.StartIndex + Model.JobsPerPage)"
            asp-route-searchString="@Model.SearchString">
             Next

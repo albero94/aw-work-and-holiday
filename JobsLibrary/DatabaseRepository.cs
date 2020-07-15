@@ -47,5 +47,13 @@ namespace JobsLibrary
                 .Skip(startIndex)
                 .Take(entriesPerPage);
         }
+
+        public int GetJobsNumberForQuery(string searchString)
+        {
+            if (string.IsNullOrEmpty(searchString))
+                return context.Jobs.Count();
+            else
+                return context.Jobs.Where(j => j.Title.ToLower().Contains(searchString.ToLower())).Count();
+        }
     }
 }
