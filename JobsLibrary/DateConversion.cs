@@ -67,8 +67,26 @@ namespace JobsLibrary
             if (dayDifference >= 1 && dayDifference < 31)
                 return $"{(int)dayDifference}d ago";
             if (dayDifference < 1)
-                return $"{(int)( dayDifference * 24)}h ago";
+                return $"{(int)(dayDifference * 24)}h ago";
             return "";
+        }
+
+        public static DateTime? DayMonthYearToDate(string? dateString)
+        {
+            if (dateString == null) return null;
+
+            return DateTime.Parse(StringCleanupForPublishedAndOrdinals(dateString));
+
+        }
+
+         public static string StringCleanupForPublishedAndOrdinals(string? dateString)
+        {
+            if (dateString == null) return null;
+
+            return dateString.Replace("Published:", "")
+                .Replace("st", "")
+                .Replace("nd", "")
+                .Replace("th", "");
         }
     }
 }

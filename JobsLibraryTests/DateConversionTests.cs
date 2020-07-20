@@ -113,5 +113,19 @@ namespace JobsLibraryTests
         }
         #endregion
 
+        #region DayMonthYearToDate
+        [Theory]
+        [InlineData("20th July 2020")]
+        [InlineData("Published: 18th July 2020")]
+        [InlineData("18 June 2020")]
+        [InlineData("Published: 1st June 2020")]
+        [InlineData("Published: 2nd June 2020")]
+        public void DayMonthYearToDate_DayMonthYear_ReturnsDate(string candidate)
+        {
+            var result = DateConversion.DayMonthYearToDate(candidate);
+            Assert.IsType<DateTime>(result);
+        }
+        #endregion
+
     }
 }
