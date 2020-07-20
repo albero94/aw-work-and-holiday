@@ -29,7 +29,7 @@ namespace WorkAndHolidayScraper
             services.AddScoped<ScraperFactory>();
             AddScraperServices(services);
 
-            services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgresDatabase")));
+            services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgresLocalDatabase")));
         }
 
         private static void AddScraperServices(IServiceCollection services)
@@ -44,6 +44,8 @@ namespace WorkAndHolidayScraper
                     .AddScoped<Scraper, SeekScraper>(s => s.GetService<SeekScraper>());
             services.AddScoped<WorkingHolidayJobsScraper>()
                     .AddScoped<Scraper, WorkingHolidayJobsScraper>(s => s.GetService<WorkingHolidayJobsScraper>());
+            services.AddScoped<BackpackerJobBoardScraper>()
+                    .AddScoped<Scraper, BackpackerJobBoardScraper>(s => s.GetService<BackpackerJobBoardScraper>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

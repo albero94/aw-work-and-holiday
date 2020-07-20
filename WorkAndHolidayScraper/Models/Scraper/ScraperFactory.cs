@@ -23,6 +23,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
                 "seek" => (Scraper)serviceProvider.GetService(typeof(SeekScraper)),
                 "jooble" => (Scraper)serviceProvider.GetService(typeof(JoobleScraper)),
                 "workingholidayjobs" => (Scraper)serviceProvider.GetService(typeof(WorkingHolidayJobsScraper)),
+                "backpackerjobboard" => (Scraper)serviceProvider.GetService(typeof(BackpackerJobBoardScraper)),
                 _ => null
             };
         }
