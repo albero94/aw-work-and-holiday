@@ -84,8 +84,10 @@ namespace JobsLibrary
             if (dateString == null) return null;
 
             return dateString.Replace("Published:", "")
+                .Replace("Augu", "August")
                 .Replace("st", "")
                 .Replace("nd", "")
+                .Replace("rd", "")
                 .Replace("th", "");
         }
     }

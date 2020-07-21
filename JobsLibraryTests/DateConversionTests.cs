@@ -120,6 +120,8 @@ namespace JobsLibraryTests
         [InlineData("18 June 2020")]
         [InlineData("Published: 1st June 2020")]
         [InlineData("Published: 2nd June 2020")]
+        [InlineData("Published: 3rd June 2020")]
+        [InlineData("Published: 4th June 2020")]
         public void DayMonthYearToDate_DayMonthYear_ReturnsDate(string candidate)
         {
             var result = DateConversion.DayMonthYearToDate(candidate);
