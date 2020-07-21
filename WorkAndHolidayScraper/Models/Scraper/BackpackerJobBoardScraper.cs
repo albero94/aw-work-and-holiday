@@ -12,8 +12,10 @@ namespace WorkAndHolidayScraper.Models.Scraper
     public class BackpackerJobBoardScraper : Scraper
     {
         private readonly string WebsiteName = "BackpackerJobBoard";
-        private static readonly string url = "https://www.backpackerjobboard.com.au/jobs/au-pair-jobs/";
-        public BackpackerJobBoardScraper(IRepository repository, ILogger<SeekScraper> logger) :
+        //private static readonly string url = "https://www.backpackerjobboard.com.au/jobs/au-pair-jobs/";
+        private static readonly string url = "https://www.backpackerjobboard.com.au/jobs/bar-work-jobs/?p=3";
+        private int categoryIndex = 5;
+        public BackpackerJobBoardScraper(IRepository repository, ILogger<BackpackerJobBoardScraper> logger) :
             base(repository, logger, url)
         {
         }
@@ -33,7 +35,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
                     entry.Title = ((IHtmlElement)jobRow.QuerySelector(".job-title")).TextContent;
                     entry.Href = ((IHtmlAnchorElement)jobRow.QuerySelector(".job-title a")).Href;
                     entry.Company = ((IHtmlElement)jobRow.QuerySelector(".job-company")).TextContent;
-                    entry.Location = ((IHtmlElement)jobRow.QuerySelector(".job-location")).TextContent;
+                    entry.Location = ((IHtmlElement)jobRow.QuerySelector(".job-location"))?.TextContent;
                     entry.Description = ((IHtmlElement)jobRow.QuerySelector(".job-excerpt"))?.TextContent;
                     entry.Date = DateConversion.DayMonthYearToDate
                             (((IHtmlElement)jobRow.QuerySelector(".job-datestamp"))?.TextContent);
@@ -49,9 +51,36 @@ namespace WorkAndHolidayScraper.Models.Scraper
             return;
         }
 
-        protected override string? getNextLinkUrl(IDocument document) =>
-            ((IHtmlAnchorElement)
-            document.QuerySelectorAll("[rel='noindex,follow']").Last())
-            .Href;
+        protected override string? getNextLinkUrl(IDocument document)
+        {
+            string? href = null;
+            var element = document.QuerySelectorAll("[rel='noindex,follow']")?.Last();
+            if (element != null) href = ((IHtmlAnchorElement)element).Href;
+
+            if (href == document.BaseUri || href == null)
+            {
+                href = getNextCategoryUrl(document);
+            }
+            return href;
+        }
+
+        private string? getNextCategoryUrl(IDocument document)
+        {
+            try
+            {
+                categoryIndex++;
+                return
+                    ((IHtmlAnchorElement)
+                        document.QuerySelectorAll(".widget")[0].QuerySelectorAll("ul li")[categoryIndex]
+                        .QuerySelector("a"))
+                    .Href;
+
+            }
+            catch (Exception ex)
+            {
+                logger.LogWarning(ex.Message);
+                return null;
+            }
+        }
     }
 }
