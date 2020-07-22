@@ -33,9 +33,9 @@ namespace JobsLibrary
             return jobs;
         }
 
-        public IEnumerable<Job> GetFilteredJobs(string serachString, int startIndex, int entriesPerPage)
+        public IEnumerable<Job> GetFilteredJobs(string searchString, int startIndex, int entriesPerPage)
         {
-            return context.Jobs.Where(j => j.Title.ToLower().Contains(serachString.ToLower()))
+            return context.Jobs.Where(j => j.Title.ToLower().Contains(searchString.ToLower()))
                 .OrderByDescending(job => job.Date)
                 .Skip(startIndex)
                 .Take(entriesPerPage);
