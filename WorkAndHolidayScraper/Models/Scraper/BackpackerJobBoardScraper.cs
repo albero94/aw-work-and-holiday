@@ -12,9 +12,8 @@ namespace WorkAndHolidayScraper.Models.Scraper
     public class BackpackerJobBoardScraper : Scraper
     {
         private readonly string WebsiteName = "BackpackerJobBoard";
-        //private static readonly string url = "https://www.backpackerjobboard.com.au/jobs/au-pair-jobs/";
-        private static readonly string url = "https://www.backpackerjobboard.com.au/jobs/bar-work-jobs/?p=3";
-        private int categoryIndex = 5;
+        private static readonly string url = "https://www.backpackerjobboard.com.au/jobs/au-pair-jobs/";
+        private int categoryIndex = 4;
         public BackpackerJobBoardScraper(IRepository repository, ILogger<BackpackerJobBoardScraper> logger) :
             base(repository, logger, url)
         {
@@ -54,13 +53,14 @@ namespace WorkAndHolidayScraper.Models.Scraper
         protected override string? getNextLinkUrl(IDocument document)
         {
             string? href = null;
-            var element = document.QuerySelectorAll("[rel='noindex,follow']")?.Last();
-            if (element != null) href = ((IHtmlAnchorElement)element).Href;
+            var pagingLinks = document.QuerySelectorAll("[rel='noindex,follow']");
+            
+            if (pagingLinks.Length != 0)
+                href = ((IHtmlAnchorElement) pagingLinks.Last()).Href;
 
             if (href == document.BaseUri || href == null)
-            {
                 href = getNextCategoryUrl(document);
-            }
+            
             return href;
         }
 
@@ -69,11 +69,12 @@ namespace WorkAndHolidayScraper.Models.Scraper
             try
             {
                 categoryIndex++;
-                return
-                    ((IHtmlAnchorElement)
-                        document.QuerySelectorAll(".widget")[0].QuerySelectorAll("ul li")[categoryIndex]
-                        .QuerySelector("a"))
-                    .Href;
+                var categories = document.QuerySelectorAll(".widget")[0].QuerySelectorAll("ul li");
+
+                if (categoryIndex >= categories.Length)
+                    return null;
+
+                return ((IHtmlAnchorElement) categories[categoryIndex].QuerySelector("a")).Href;
 
             }
             catch (Exception ex)
