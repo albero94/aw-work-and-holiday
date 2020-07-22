@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsLibrary", "JobsLibrary\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThePopularJob", "ThePopularJob\ThePopularJob.csproj", "{8B62A263-2E15-47FE-AB2E-6AF6534EAF57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsLibraryTests", "JobsLibraryTests\JobsLibraryTests.csproj", "{7A2157D5-83B2-42E5-ABB1-C1C6C3463908}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobsLibraryTests", "JobsLibraryTests\JobsLibraryTests.csproj", "{7A2157D5-83B2-42E5-ABB1-C1C6C3463908}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20D11A3A-22B7-4539-891E-484C073DE31C}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
