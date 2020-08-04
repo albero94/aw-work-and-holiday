@@ -35,7 +35,7 @@ namespace JobsLibrary
                 .AddJsonFile(Directory.GetCurrentDirectory() + "/../ThePopularJob/appsettings.json")
                 .Build();
             var builder = new DbContextOptionsBuilder<AppDbContext>();
-            var connectionString = configuration.GetConnectionString("PostgresDatabase");
+            var connectionString = configuration.GetConnectionString("PostgresRemoteDatabase");
             builder.UseNpgsql(connectionString);
             //builder.UseSqlServer(connectionString);
             return new AppDbContext(builder.Options);

@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200724134904_MakeHrefAllowNulls.cs" />
+    <Compile Remove="Migrations\20200724134904_MakeHrefAllowNulls.Designer.cs" />
+    <Compile Remove="Migrations\20200804130223_AddRequiredFields.cs" />
+    <Compile Remove="Migrations\20200804130223_AddRequiredFields.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5">
