@@ -34,7 +34,7 @@ namespace WorkAndHolidayScraper.Models.Scraper
                     entry.Href = ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobTitle']")).Href;
                     entry.Company = ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobCompany']"))?.Text;
                     entry.Location = ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobLocation']")).Text +
-                            ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobArea']"))?.Text;
+                            ((IHtmlAnchorElement)jobRow.QuerySelector("[data-automation='jobArea']"))?.Text ?? "";
                     entry.Description = ((IHtmlSpanElement)jobRow.QuerySelector("[data-automation='jobShortDescription']")).TextContent;
                     entry.Date = DateConversion.TimeAgoStringToDate
                             (((IHtmlSpanElement)jobRow.QuerySelector("[data-automation='jobListingDate']")).TextContent);
