@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -30,5 +31,6 @@ namespace JobsLibrary
         public string? OriginalWebsite { get; set; }
         [Column("salary")]
         public string? Salary { get; set; }
+        public IdentityUser? User { get; set; }
     }
 }
