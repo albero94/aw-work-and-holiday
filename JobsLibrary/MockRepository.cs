@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 
@@ -47,6 +48,21 @@ namespace JobsLibrary
         }
 
         public int GetJobsNumberForQuery(string searchString)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Job GetJob(Guid Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Job EditJob(Job jobChanges)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Job> GetUserJobs(IdentityUser user)
         {
             throw new NotImplementedException();
         }

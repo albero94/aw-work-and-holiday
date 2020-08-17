@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,14 @@ namespace JobsLibrary
             return job;
         }
 
+        public Job EditJob(Job jobChanges)
+        {
+            var job = context.Jobs.Attach(jobChanges);
+            job.State = EntityState.Modified;
+            context.SaveChanges();
+            return jobChanges;
+        }
+
         public IEnumerable<Job> AddJobsFromList(List<Job> jobs)
         {
             foreach (var job in jobs)
@@ -41,6 +51,11 @@ namespace JobsLibrary
                 .Take(entriesPerPage);
         }
 
+        public Job GetJob(Guid Id)
+        {
+            return context.Jobs.Where(j => j.Id == Id).FirstOrDefault();
+        }
+
         public IEnumerable<Job> GetJobs(int startIndex, int entriesPerPage)
         {
             return context.Jobs.OrderByDescending(job => job.Date)
@@ -54,6 +69,11 @@ namespace JobsLibrary
                 return context.Jobs.Count();
             else
                 return context.Jobs.Where(j => j.Title.ToLower().Contains(searchString.ToLower())).Count();
+        }
+
+        public IEnumerable<Job> GetUserJobs(IdentityUser user)
+        {
+            return context.Jobs.Where(j => j.User == user);
         }
     }
 }
