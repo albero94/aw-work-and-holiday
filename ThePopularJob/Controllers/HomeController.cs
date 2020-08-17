@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ThePopularJob.Models;
 using ThePopularJob.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ThePopularJob.Controllers
 {
@@ -15,13 +17,16 @@ namespace ThePopularJob.Controllers
     {
         private readonly ILogger<HomeController> logger;
         private readonly IRepository repository;
+        private readonly UserManager<IdentityUser> userManager;
         private readonly int jobsPerPage = 20;
 
         public HomeController(ILogger<HomeController> logger,
-                IRepository repository)
+                IRepository repository,
+                UserManager<IdentityUser> userManager)
         {
             this.logger = logger;
             this.repository = repository;
+            this.userManager = userManager;
         }
 
         public IActionResult Index(int startIndex)
@@ -32,11 +37,6 @@ namespace ThePopularJob.Controllers
         public IActionResult ListJobs(string searchString, int startIndex)
         {
             var jobsNumber = repository.GetJobsNumberForQuery(searchString);
-
-            var jobs = string.IsNullOrEmpty(searchString) ?
-                repository.GetJobs(startIndex, jobsPerPage) :
-                repository.GetFilteredJobs(searchString, startIndex, jobsPerPage);
-
             var model = new ListJobsViewModel();
             model.StartIndex = startIndex;
             model.JobsPerPage = jobsPerPage;
@@ -45,6 +45,10 @@ namespace ThePopularJob.Controllers
             model.PageNumber = $"Page {startIndex / jobsPerPage + 1} of " +
                 $"{Math.Ceiling( jobsNumber / (float)jobsPerPage)}";
 
+
+            var jobs = string.IsNullOrEmpty(searchString) ?
+                repository.GetJobs(startIndex, jobsPerPage) :
+                repository.GetFilteredJobs(searchString, startIndex, jobsPerPage);
             foreach (var job in jobs)
             {
                 model.Jobs.Add(new JobViewModel
@@ -60,6 +64,12 @@ namespace ThePopularJob.Controllers
             }
 
             return View(model);
+        }
+
+        public IActionResult JobDetails(Guid Id)
+        {
+            var job = repository.GetJob(Id);
+            return View(job);
         }
 
         public IActionResult Privacy()
