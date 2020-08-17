@@ -1,0 +1,35 @@
+﻿@model JobsLibrary.Job
+@{
+    ViewBag.Title = "Job Details";
+}
+
+<div>
+    <div class="card" style="margin-bottom:3em">
+        <div class="card-header d-flex justify-content-between">
+            <h5>@Model.Title</h5>
+            <span style="min-width:55px">Date Posted: @Model.Date</span>
+        </div>
+        <div class="card-body child-margin-1">
+            @if (!string.IsNullOrEmpty(Model.Company))
+            {
+                <div><i class="fa fa-building"></i> @Model.Company</div>
+            }
+            @if (!string.IsNullOrEmpty(Model.Location))
+            {
+                <div><i class="fa fa-map-marker"></i> @Model.Location</div>
+            }
+            @if (!string.IsNullOrEmpty(Model.Description))
+            {
+                <div>@Model.Description</div>
+            }
+            @if (!string.IsNullOrEmpty(Model.Salary))
+            {
+                <div><i class="fa fa-usd"></i> @Model.Salary</div>
+            }
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-primary mt-2" href="@Model.Href" target="_blank">Apply</a>
+        </div>
+
+    </div>
+</div>
