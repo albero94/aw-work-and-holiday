@@ -66,5 +66,10 @@ namespace JobsLibrary
         {
             throw new NotImplementedException();
         }
+
+        public Job DeleteJob(Guid Id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

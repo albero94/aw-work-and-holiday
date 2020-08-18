@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ThePopularJob.Controllers
 {
+    [Authorize]
     public class JobPostings : Controller
     {
         private readonly ILogger<HomeController> logger;
@@ -30,14 +31,12 @@ namespace ThePopularJob.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public IActionResult AddJob()
         {
             return View();
         }
 
         [HttpPost] 
-        [Authorize]
         public async Task<IActionResult> AddJob(Job job)
         {
             if (!ModelState.IsValid) return View();
@@ -51,8 +50,14 @@ namespace ThePopularJob.Controllers
             return RedirectToAction("ListJobs");
         }
 
+        [HttpPost]
+        public IActionResult DeleteJob(Guid Id)
+        {
+            repository.DeleteJob(Id);
+            return RedirectToAction("ListJobs");
+        }
+
         [HttpGet]
-        [Authorize]
         public IActionResult EditJob(Guid Id)
         {
             var job = repository.GetJob(Id);
@@ -60,7 +65,6 @@ namespace ThePopularJob.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public IActionResult EditJob(Job job)
         {
             if (!ModelState.IsValid) return View();
@@ -70,7 +74,6 @@ namespace ThePopularJob.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> ListJobs()
         {
             var user = await userManager.GetUserAsync(User);

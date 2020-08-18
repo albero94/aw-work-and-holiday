@@ -25,14 +25,6 @@ namespace JobsLibrary
             return job;
         }
 
-        public Job EditJob(Job jobChanges)
-        {
-            var job = context.Jobs.Attach(jobChanges);
-            job.State = EntityState.Modified;
-            context.SaveChanges();
-            return jobChanges;
-        }
-
         public IEnumerable<Job> AddJobsFromList(List<Job> jobs)
         {
             foreach (var job in jobs)
@@ -41,6 +33,24 @@ namespace JobsLibrary
             }
             context.SaveChanges();
             return jobs;
+        }
+
+        public Job EditJob(Job jobChanges)
+        {
+            var job = context.Jobs.Attach(jobChanges);
+            job.State = EntityState.Modified;
+            context.SaveChanges();
+            return jobChanges;
+        }
+
+        public Job DeleteJob(Guid Id)
+        {
+            var job = context.Jobs.Where(j => j.Id == Id).FirstOrDefault();
+            if (job == null) return null;
+
+            context.Jobs.Remove(job);
+            context.SaveChanges();
+            return job;
         }
 
         public IEnumerable<Job> GetFilteredJobs(string searchString, int startIndex, int entriesPerPage)
@@ -75,5 +85,7 @@ namespace JobsLibrary
         {
             return context.Jobs.Where(j => j.User == user);
         }
+
+        
     }
 }

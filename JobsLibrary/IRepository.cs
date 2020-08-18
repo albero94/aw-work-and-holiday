@@ -8,6 +8,7 @@ namespace JobsLibrary
     {
         Job AddJob(Job job);
         IEnumerable<Job> AddJobsFromList(List<Job> jobs);
+        Job DeleteJob(Guid Id);
         Job EditJob(Job jobChanges);
         Job GetJob(Guid Id);
         IEnumerable<Job> GetJobs(int startIndex, int entriesPerPage);
