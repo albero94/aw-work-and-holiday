@@ -19,7 +19,7 @@ namespace JobsLibrary
         [Required]
         public string? Company { get; set; }
         [Column("location")]
-        [Required]
+        //[Required]
         public string Location { get; set; }
         [Column("city")]
         public string City { get; set; }
