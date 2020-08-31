@@ -126,3 +126,9 @@ body {
 .card-title{
     text-align:center;
 }
+
+.card-button {
+    color:#fff;  
+    position:absolute; 
+    bottom:1rem
+}
