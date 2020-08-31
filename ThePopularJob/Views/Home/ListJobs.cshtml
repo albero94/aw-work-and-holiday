@@ -1,4 +1,6 @@
 ﻿@model ListJobsViewModel
+@inject SignInManager<IdentityUser> signInManager;
+
 @{
     ViewBag.Title = "Home Page";
 }
@@ -43,7 +45,11 @@
                 }
             </div>
             <div class="card-footer">
-                <a class="btn btn-primary mt-2" href="@job.Href" target="_blank">Apply</a>
+                @if (signInManager.IsSignedIn(User))
+                {
+                    <a class="btn btn-primary mt-2" href="@job.Href" target="_blank">Apply</a>
+                }
+                else {<p>Please log in to apply</p>}
             </div>
         </div>
     }
