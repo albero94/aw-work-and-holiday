@@ -38,7 +38,7 @@ namespace JobsLibrary
         public string? OriginalWebsite { get; set; }
         [Column("salary")]
         public string? Salary { get; set; }
-        public List<string> Categories { get; set; }
+        public List<JobCategory> Categories { get; set; }
         public IdentityUser? User { get; set; }
     }
 }
