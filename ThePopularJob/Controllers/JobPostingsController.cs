@@ -33,7 +33,9 @@ namespace ThePopularJob.Controllers
         [HttpGet]
         public IActionResult AddJob()
         {
-            return View();
+            var jobCategories = repository.GetJobCategories();
+            var jobViewModel = new JobViewModel{ Categories = jobCategories};
+            return View(jobViewModel);
         }
 
         [HttpPost] 

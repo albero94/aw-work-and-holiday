@@ -71,5 +71,10 @@ namespace JobsLibrary
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<JobCategory> GetJobCategories()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

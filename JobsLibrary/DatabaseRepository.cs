@@ -86,6 +86,9 @@ namespace JobsLibrary
             return context.Jobs.Where(j => j.User == user);
         }
 
-        
+        public IEnumerable<JobCategory> GetJobCategories()
+        {
+            return context.JobCategories;
+        }
     }
 }
