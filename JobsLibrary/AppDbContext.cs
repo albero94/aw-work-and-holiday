@@ -12,6 +12,7 @@ namespace JobsLibrary
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Job> Jobs { get; set; }
+        public DbSet<JobCategory> JobCategories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
