@@ -42,12 +42,7 @@ namespace JobsLibrary
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Job> GetFilteredJobs(string serachString, int startIndex, int entriesPerPage)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetJobsNumberForQuery(string searchString)
+        public int GetJobsCountForQuery(string searchString)
         {
             throw new NotImplementedException();
         }
@@ -73,6 +68,11 @@ namespace JobsLibrary
         }
 
         public IEnumerable<JobCategory> GetJobCategories()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Job> GetFilteredJobs(int startIndex, int entriesPerPage, string searchString, int categoryId)
         {
             throw new NotImplementedException();
         }

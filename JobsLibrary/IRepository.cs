@@ -12,8 +12,8 @@ namespace JobsLibrary
         Job EditJob(Job jobChanges);
         Job GetJob(Guid Id);
         IEnumerable<Job> GetJobs(int startIndex, int entriesPerPage);
-        IEnumerable<Job> GetFilteredJobs(string searchString, int startIndex, int entriesPerPage);
-        int GetJobsNumberForQuery(string searchString);
+        IEnumerable<Job> GetFilteredJobs(int startIndex, int entriesPerPage, string searchString, int categoryId);
+        int GetJobsCountForQuery(string searchString);
         IEnumerable<Job> GetUserJobs(IdentityUser user);
         IEnumerable<JobCategory> GetJobCategories();
     }

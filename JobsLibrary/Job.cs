@@ -38,6 +38,7 @@ namespace JobsLibrary
         public string? OriginalWebsite { get; set; }
         [Column("salary")]
         public string? Salary { get; set; }
+        [Column("category_id")]
         public int? CategoryId { get; set; }
         public IdentityUser? User { get; set; }
     }
