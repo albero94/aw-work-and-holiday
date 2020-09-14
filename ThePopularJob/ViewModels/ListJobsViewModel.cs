@@ -7,9 +7,9 @@ namespace ThePopularJob.ViewModels
     {
         public ListJobsViewModel()
         {
-            Jobs = new List<JobViewModel>();
+            Jobs = new List<JobSummaryViewModel>();
         }
-        public List<JobViewModel> Jobs { get; set; }
+        public List<JobSummaryViewModel> Jobs { get; set; }
 
         public string SearchString { get; set; }
         public int StartIndex { get; set; }
