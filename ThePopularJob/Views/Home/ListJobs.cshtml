@@ -5,13 +5,20 @@
     ViewBag.Title = "Home Page";
 }
 
-<form asp-action="ListJobs" method="get" class="input-group mb-5 mx-auto" style="max-width:600px">
-    <input type="text" asp-for="SearchString" class="form-control" placeholder="Search..." />
-    <button class="input-group-append border-0 p-0">
-        <span class="input-group-text" style="height:100%">
-            <i class="fa fa-search"></i>
-        </span>
-    </button>
+<form asp-action="ListJobs" method="get" class="mx-auto" style="max-width:600px">
+    <div class="input-group mb-3">
+        <input type="text" asp-for="SearchString" class="form-control" placeholder="Search..." />
+        <button class="input-group-append border-0 p-0">
+            <span class="input-group-text" style="height:100%">
+                <i class="fa fa-search"></i>
+            </span>
+        </button>
+    </div>
+    <div class="input-group mb-5">
+        <select asp-for="SelectedCategoryId" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))" class="form-control">
+            <option>Filter By Category...</option>
+        </select>
+    </div>
 </form>
 
 <div class="text-center mb-3">
@@ -49,7 +56,8 @@
                 {
                     <a class="btn btn-primary mt-2" href="@job.Href" target="_blank">Apply</a>
                 }
-                else {<p>Please log in to apply</p>}
+                else
+                {<p>Please log in to apply</p>}
             </div>
         </div>
     }

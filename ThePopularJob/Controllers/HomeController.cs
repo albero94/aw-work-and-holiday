@@ -34,21 +34,20 @@ namespace ThePopularJob.Controllers
             return View();
         }
 
-        public IActionResult ListJobs(string searchString, int startIndex)
+        public IActionResult ListJobs(string searchString, int startIndex, int selectedCategoryId)
         {
-            var jobsNumber = repository.GetJobsNumberForQuery(searchString);
+            var jobsCount = repository.GetJobsCountForQuery(searchString);
             var model = new ListJobsViewModel();
             model.StartIndex = startIndex;
             model.JobsPerPage = jobsPerPage;
             model.SearchString = searchString;
-            model.JobsNumberForQuery = jobsNumber;
+            model.JobsNumberForQuery = jobsCount;
             model.PageNumber = $"Page {startIndex / jobsPerPage + 1} of " +
-                $"{Math.Ceiling( jobsNumber / (float)jobsPerPage)}";
+                $"{Math.Ceiling( jobsCount / (float)jobsPerPage)}";
+            model.Categories = repository.GetJobCategories();
+            
+            var jobs = repository.GetFilteredJobs(startIndex, jobsPerPage, searchString, selectedCategoryId);
 
-
-            var jobs = string.IsNullOrEmpty(searchString) ?
-                repository.GetJobs(startIndex, jobsPerPage) :
-                repository.GetFilteredJobs(searchString, startIndex, jobsPerPage);
             foreach (var job in jobs)
             {
                 model.Jobs.Add(new JobSummaryViewModel

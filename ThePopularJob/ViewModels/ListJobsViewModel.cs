@@ -16,6 +16,8 @@ namespace ThePopularJob.ViewModels
         public int JobsPerPage { get; set; }
         public int JobsNumberForQuery { get; set; }
         public string PageNumber { get; set; }
+        public int SelectedCategoryId { get; set; }
+        public IEnumerable<JobCategory> Categories { get; set; }
     }
 }
 
