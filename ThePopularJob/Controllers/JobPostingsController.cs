@@ -10,6 +10,7 @@ using ThePopularJob.Models;
 using ThePopularJob.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ThePopularJob.Controllers
 {
@@ -62,16 +63,22 @@ namespace ThePopularJob.Controllers
         [HttpGet]
         public IActionResult EditJob(Guid Id)
         {
+            var jobCategories = repository.GetJobCategories();
             var job = repository.GetJob(Id);
-            return View(job);
+            var jobViewModel = new JobViewModel
+            {
+                Job = job,
+                Categories = jobCategories
+            };
+            return View(jobViewModel);
         }
 
         [HttpPost]
-        public IActionResult EditJob(Job job)
+        public async Task<IActionResult>  EditJob(JobViewModel jobViewModel)
         {
             if (!ModelState.IsValid) return View();
-
-            var result = repository.EditJob(job);
+            jobViewModel.Job.User = await userManager.GetUserAsync(User);
+            var result = repository.EditJob(jobViewModel.Job);
             return RedirectToAction("ListJobs");
         }
 
