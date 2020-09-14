@@ -51,7 +51,7 @@ namespace ThePopularJob.Controllers
                 repository.GetFilteredJobs(searchString, startIndex, jobsPerPage);
             foreach (var job in jobs)
             {
-                model.Jobs.Add(new JobViewModel
+                model.Jobs.Add(new JobSummaryViewModel
                 {
                     Title = job.Title,
                     TimeAgo = DateConversion.DateTimeToTimeAgo(job.Date),
