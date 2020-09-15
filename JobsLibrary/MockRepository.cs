@@ -42,7 +42,7 @@ namespace JobsLibrary
             throw new NotImplementedException();
         }
 
-        public int GetJobsCountForQuery(string searchString)
+        public int GetJobsCountForQuery(string searchString, int categoryId)
         {
             throw new NotImplementedException();
         }

@@ -36,7 +36,7 @@ namespace ThePopularJob.Controllers
 
         public IActionResult ListJobs(string searchString, int startIndex, int selectedCategoryId)
         {
-            var jobsCount = repository.GetJobsCountForQuery(searchString);
+            var jobsCount = repository.GetJobsCountForQuery(searchString, selectedCategoryId);
             var model = new ListJobsViewModel();
             model.StartIndex = startIndex;
             model.JobsPerPage = jobsPerPage;

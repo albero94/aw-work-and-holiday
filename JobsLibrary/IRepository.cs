@@ -13,7 +13,7 @@ namespace JobsLibrary
         Job GetJob(Guid Id);
         IEnumerable<Job> GetJobs(int startIndex, int entriesPerPage);
         IEnumerable<Job> GetFilteredJobs(int startIndex, int entriesPerPage, string searchString, int categoryId);
-        int GetJobsCountForQuery(string searchString);
+        int GetJobsCountForQuery(string searchString, int categoryId);
         IEnumerable<Job> GetUserJobs(IdentityUser user);
         IEnumerable<JobCategory> GetJobCategories();
     }

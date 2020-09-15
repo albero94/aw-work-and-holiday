@@ -53,7 +53,7 @@ namespace JobsLibrary
             return job;
         }
 
-        public IEnumerable<Job> GetFilteredJobs(int startIndex, int entriesPerPage, string searchString="", int categoryId=0)
+        public IEnumerable<Job> GetFilteredJobs(int startIndex, int entriesPerPage, string searchString, int categoryId)
         {
             var jobs = context.Jobs.AsQueryable();
             if (!string.IsNullOrEmpty(searchString)) jobs = jobs.Where(j => j.Title.ToLower().Contains(searchString.ToLower()));
@@ -76,12 +76,13 @@ namespace JobsLibrary
                 .Take(entriesPerPage);
         }
 
-        public int GetJobsCountForQuery(string searchString)
+        public int GetJobsCountForQuery(string searchString, int categoryId)
         {
-            if (string.IsNullOrEmpty(searchString))
-                return context.Jobs.Count();
-            else
-                return context.Jobs.Where(j => j.Title.ToLower().Contains(searchString.ToLower())).Count();
+            var jobs = context.Jobs.AsQueryable();
+            if (!string.IsNullOrEmpty(searchString)) jobs = jobs.Where(j => j.Title.ToLower().Contains(searchString.ToLower()));
+            if (categoryId != 0) jobs = jobs.Where(j => j.CategoryId == categoryId);
+
+            return jobs.Count();
         }
 
         public IEnumerable<Job> GetUserJobs(IdentityUser user)
