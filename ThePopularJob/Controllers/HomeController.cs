@@ -76,6 +76,9 @@ namespace ThePopularJob.Controllers
             return View();
         }
 
+        public IActionResult Referrals() => View();
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
