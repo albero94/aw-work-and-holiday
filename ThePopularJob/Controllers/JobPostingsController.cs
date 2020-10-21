@@ -88,6 +88,8 @@ namespace ThePopularJob.Controllers
         {
             var user = await userManager.GetUserAsync(User);
             var jobs = repository.GetUserJobs(user);
+            var jobCategories = repository.GetJobCategories().ToList();
+            ViewBag.Categories = jobCategories;
             return View(jobs);
         }
     }

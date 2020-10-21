@@ -57,6 +57,9 @@ namespace ThePopularJob.Controllers
                 });
             }
 
+            var jobCategories = repository.GetJobCategories().ToList();
+            ViewBag.Categories = jobCategories;
+
             return View(model);
         }
 
