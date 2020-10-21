@@ -38,8 +38,25 @@ namespace JobsLibrary
         public string? OriginalWebsite { get; set; }
         [Column("salary")]
         public string? Salary { get; set; }
+        [Column("salary_id")]
+        public int SalaryId { get; set; }
         [Column("category_id")]
         public int? CategoryId { get; set; }
         public IdentityUser? User { get; set; }
+
+        [NotMapped]
+        public Dictionary<int,string> SalaryRange { get; }
+
+        public Job()
+        {
+            SalaryRange = new Dictionary<int, string> {
+                { 1, "50-60k" },
+                { 2, "60-70k" },
+                { 3, "70-80k" },
+                { 4, "80-90k" },
+                { 5, "90-100k" },
+                { 6, "+100k" }
+            };
+        }
     }
 }

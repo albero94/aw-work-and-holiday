@@ -44,12 +44,14 @@
                 <textarea asp-for="Job.LongDescription" class="form-control" rows="5"></textarea>
             </div>
             <div class="form-group">
-                <label asp-for="Job.Salary"></label>
-                <input asp-for="Job.Salary" class="form-control" />
+                <label asp-for="Job.SalaryId">Salary Range</label>
+                <select asp-for="Job.SalaryId" asp-items="@(new SelectList(Model.Job.SalaryRange, "Key", "Value"))" class="form-control">
+                    <option>Please select one</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Job.CategoryId"></label>
-                <select asp-for="Job.CategoryId" asp-items="@(new SelectList(Model.Categories, "Id", "Name", Model.Job.CategoryId))" class="form-control">
+                <select asp-for="Job.CategoryId" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))" class="form-control">
                     <option>Please select one</option>
                 </select>
             </div>

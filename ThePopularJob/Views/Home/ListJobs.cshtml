@@ -26,35 +26,36 @@
 </div>
 
 <div>
-    @foreach (var job in Model.Jobs)
+    @foreach (var jobSummary in Model.Jobs)
     {
         <div class="card" style="margin-bottom:3em">
             <div class="card-header d-flex justify-content-between">
-                <h5>@job.Title</h5>
-                <span style="min-width:55px">@job.TimeAgo</span>
+                <h5>@jobSummary.Job.Title</h5>
+                <span style="min-width:55px">@jobSummary.TimeAgo</span>
             </div>
             <div class="card-body child-margin-1">
-                @if (!string.IsNullOrEmpty(job.Company))
+                @if (!string.IsNullOrEmpty(jobSummary.Job.Company))
                 {
-                    <div><i class="fa fa-building"></i> @job.Company</div>
+                    <div><i class="fa fa-building"></i> @jobSummary.Job.Company</div>
                 }
-                @if (!string.IsNullOrEmpty(job.Location))
+                @if (!string.IsNullOrEmpty(jobSummary.Job.Location)
+                || (!string.IsNullOrEmpty(jobSummary.Job.City) && !string.IsNullOrEmpty(jobSummary.Job.State)))
                 {
-                    <div><i class="fa fa-map-marker"></i> @job.Location</div>
+                    <div><i class="fa fa-map-marker"></i> @jobSummary.Job.Location @jobSummary.Job.City, @jobSummary.Job.State</div>
                 }
-                @if (!string.IsNullOrEmpty(job.Description))
+                @if (!string.IsNullOrEmpty(jobSummary.Job.Description))
                 {
-                    <div>@job.Description</div>
+                    <div>@jobSummary.Job.Description</div>
                 }
-                @if (!string.IsNullOrEmpty(job.Salary))
+                @if (jobSummary.Job.SalaryId != 0)
                 {
-                    <div><i class="fa fa-usd"></i> @job.Salary</div>
+                    <div><i class="fa fa-usd"></i> @jobSummary.Job.SalaryRange[jobSummary.Job.SalaryId]</div>
                 }
             </div>
             <div class="card-footer">
                 @if (signInManager.IsSignedIn(User))
                 {
-                    <a class="btn btn-primary mt-2" href="@job.Href" target="_blank">Apply</a>
+                    <a class="btn btn-primary mt-2" href="@jobSummary.Job.Href" target="_blank">Apply</a>
                 }
                 else
                 {<p>Please log in to apply</p>}

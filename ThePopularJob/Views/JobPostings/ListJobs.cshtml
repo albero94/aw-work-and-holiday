@@ -22,8 +22,8 @@
                 {
                     <div><i class="fa fa-building"></i> @job.Company</div>
                 }
-                @if (!string.IsNullOrEmpty(job.Location) 
-                    || (!string.IsNullOrEmpty(job.City) && !string.IsNullOrEmpty(job.State)))
+                @if (!string.IsNullOrEmpty(job.Location)
+                 || (!string.IsNullOrEmpty(job.City) && !string.IsNullOrEmpty(job.State)))
                 {
                     <div><i class="fa fa-map-marker"></i> @job.Location @job.City, @job.State</div>
                 }
@@ -31,9 +31,9 @@
                 {
                     <div>@job.Description</div>
                 }
-                @if (!string.IsNullOrEmpty(job.Salary))
+                @if (job.SalaryId != 0)
                 {
-                    <div><i class="fa fa-usd"></i> @job.Salary</div>
+                    <div><i class="fa fa-usd"></i> @job.SalaryRange[job.SalaryId]</div>
                 }
             </div>
             <div class="card-footer">

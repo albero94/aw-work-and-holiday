@@ -35,15 +35,16 @@ namespace ThePopularJob.Controllers
         public IActionResult AddJob()
         {
             var jobCategories = repository.GetJobCategories();
-            var jobViewModel = new JobViewModel{ Categories = jobCategories};
+            var jobViewModel = new JobViewModel{ Categories = jobCategories, Job = new Job()};
             return View(jobViewModel);
         }
 
         [HttpPost] 
-        public async Task<IActionResult> AddJob(Job job)
+        public async Task<IActionResult> AddJob(JobViewModel jobViewModel)
         {
-            if (!ModelState.IsValid) return View();
+            if (!ModelState.IsValid) return View(jobViewModel);
 
+            var job = jobViewModel.Job;
             job.Date = DateTime.Now;
             job.OriginalWebsite = "ThePopularJob";
             job.Href = "#";

@@ -52,13 +52,8 @@ namespace ThePopularJob.Controllers
             {
                 model.Jobs.Add(new JobSummaryViewModel
                 {
-                    Title = job.Title,
                     TimeAgo = DateConversion.DateTimeToTimeAgo(job.Date),
-                    Company = job.Company,
-                    Description = job.Description,
-                    Href = job.Href,
-                    Location = job.Location,
-                    Salary = job.Salary
+                    Job = job
                 });
             }
 
