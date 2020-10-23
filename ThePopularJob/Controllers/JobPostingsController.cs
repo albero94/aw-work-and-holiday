@@ -19,12 +19,11 @@ namespace ThePopularJob.Controllers
     {
         private readonly ILogger<HomeController> logger;
         private readonly IRepository repository;
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly int jobsPerPage = 20;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public JobPostings(ILogger<HomeController> logger,
                 IRepository repository,
-                UserManager<IdentityUser> userManager)
+                UserManager<ApplicationUser> userManager)
         {
             this.logger = logger;
             this.repository = repository;

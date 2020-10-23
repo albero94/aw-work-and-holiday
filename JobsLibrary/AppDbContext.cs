@@ -7,7 +7,7 @@ using System.IO;
 
 namespace JobsLibrary
 {
-    public class AppDbContext : IdentityDbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -17,7 +17,7 @@ namespace JobsLibrary
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<IdentityUser>(entity => entity.ToTable(name: "user"));
+            builder.Entity<ApplicationUser>(entity => entity.ToTable(name: "user"));
             builder.Entity<IdentityRole>(entity => entity.ToTable(name: "role"));
             builder.Entity<IdentityUserRole<string>>(entity => entity.ToTable("user_role"));
             builder.Entity<IdentityUserClaim<string>>(entity => entity.ToTable("user_claim"));

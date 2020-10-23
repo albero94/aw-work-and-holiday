@@ -9,7 +9,10 @@ namespace ThePopularJob.ViewModels
     public class RegisterViewModel
     {
         [Required]
-        public string Username { get; set; }
+        [Display(Name = "Name / Company Name")]
+        public string Name { get; set; }
+
+        public bool isCompany { get; set; }
 
         [Required]
         [EmailAddress]

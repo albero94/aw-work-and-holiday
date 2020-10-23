@@ -85,7 +85,7 @@ namespace JobsLibrary
             return jobs.Count();
         }
 
-        public IEnumerable<Job> GetUserJobs(IdentityUser user)
+        public IEnumerable<Job> GetUserJobs(ApplicationUser user)
         {
             return context.Jobs.Where(j => j.User == user);
         }

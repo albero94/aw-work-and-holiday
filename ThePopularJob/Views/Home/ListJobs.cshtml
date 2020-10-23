@@ -1,5 +1,6 @@
 ﻿@model ListJobsViewModel
-@inject SignInManager<IdentityUser> signInManager;
+@using JobsLibrary
+@inject SignInManager<ApplicationUser> signInManager;
 
 @{
     ViewBag.Title = "Home Page";
@@ -39,7 +40,7 @@
                     <div><i class="fa fa-building"></i> @jobSummary.Job.Company</div>
                 }
                 @if (!string.IsNullOrEmpty(jobSummary.Job.Location)
-               || (!string.IsNullOrEmpty(jobSummary.Job.City) && !string.IsNullOrEmpty(jobSummary.Job.State)))
+              || (!string.IsNullOrEmpty(jobSummary.Job.City) && !string.IsNullOrEmpty(jobSummary.Job.State)))
                 {
                     <div><i class="fa fa-map-marker"></i> @jobSummary.Job.Location @jobSummary.Job.City, @jobSummary.Job.State</div>
                 }

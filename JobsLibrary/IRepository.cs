@@ -14,7 +14,7 @@ namespace JobsLibrary
         IEnumerable<Job> GetJobs(int startIndex, int entriesPerPage);
         IEnumerable<Job> GetFilteredJobs(int startIndex, int entriesPerPage, string searchString, int categoryId);
         int GetJobsCountForQuery(string searchString, int categoryId);
-        IEnumerable<Job> GetUserJobs(IdentityUser user);
+        IEnumerable<Job> GetUserJobs(ApplicationUser user);
         IEnumerable<JobCategory> GetJobCategories();
     }
 }

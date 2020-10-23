@@ -57,7 +57,7 @@ namespace JobsLibrary
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Job> GetUserJobs(IdentityUser user)
+        public IEnumerable<Job> GetUserJobs(ApplicationUser user)
         {
             throw new NotImplementedException();
         }

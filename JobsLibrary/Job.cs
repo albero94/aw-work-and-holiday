@@ -42,7 +42,7 @@ namespace JobsLibrary
         public int SalaryId { get; set; }
         [Column("category_id")]
         public int? CategoryId { get; set; }
-        public IdentityUser? User { get; set; }
+        public ApplicationUser? User { get; set; }
 
         [NotMapped]
         public Dictionary<int,string> SalaryRange { get; }
