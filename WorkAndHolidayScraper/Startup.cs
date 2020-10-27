@@ -29,7 +29,7 @@ namespace WorkAndHolidayScraper
             services.AddScoped<ScraperFactory>();
             AddScraperServices(services);
 
-            services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgresLocalDatabase")));
+            services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgresRemoteDatabase")));
         }
 
         private static void AddScraperServices(IServiceCollection services)

@@ -63,8 +63,16 @@ namespace ThePopularJob.Controllers
 
                 if (result.Succeeded)
                 {
-                    // send confirmation link
-                    return RedirectToRegistrationMessageView();
+                    if (user.isCompany) 
+                        result = await userManager.AddToRoleAsync(user, Role.Company);
+                    else 
+                        result = await userManager.AddToRoleAsync(user, Role.User);
+
+                    if (result.Succeeded)
+                    {
+                        // send confirmation link
+                        return RedirectToRegistrationMessageView();
+                    }
                 }
                 PrintModelErrors(result.Errors);
             }

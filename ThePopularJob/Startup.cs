@@ -8,6 +8,9 @@ using JobsLibrary;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Net;
+using ThePopularJob.Models;
+using System;
+using System.Threading.Tasks;
 
 namespace ThePopularJob
 {
@@ -27,14 +30,25 @@ namespace ThePopularJob
             services.AddLogging();
             services.AddScoped<IRepository, DatabaseRepository>();
             services.AddDbContextPool<AppDbContext>(options =>
-                    options.UseNpgsql(Configuration.GetConnectionString("PostgresDatabase")));
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+                    options.UseNpgsql(Configuration.GetConnectionString("PostgresRemoteDatabase")));
+
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.User.RequireUniqueEmail = true;
-            }).AddEntityFrameworkStores<AppDbContext>();
+            })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>();
+
+
+            services.AddSingleton(async serviceProvider =>
+            {
+                await CreateRolesAsync(serviceProvider);
+                return "";
+            });
 
             services.Configure<ForwardedHeadersOptions>(options =>
             {
@@ -75,6 +89,21 @@ namespace ThePopularJob
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+        
+
+        public async Task CreateRolesAsync(IServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            string[] roleNames = { "Company", "User" };
+
+            foreach( var roleName in roleNames)
+            {
+                if (!await roleManager.RoleExistsAsync(roleName))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
         }
     }
 }
