@@ -10,31 +10,37 @@
     <div class="col-md-12">
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name"></label>
+            <p class="font-weight-bold">What are you looking for?</p>
+            <div class="form-check">
+                <input asp-for="isCompany" class="form-check-input" type="radio" value="false">
+                <label asp-for="isCompany" class="form-check-label">
+                    I am a user looking for a Job
+                </label>
+            </div>
+            <div class="form-check">
+                <input asp-for="isCompany" id="rb_company" class="form-check-input" type="radio" value="true">
+                <label for="rb_company" class="form-check-label">
+                    I am a company looking to hire people
+                </label>
+            </div>
+            <div class="form-group mt-3">
+                <label class="font-weight-bold" asp-for="Name"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <div class="form-check">
-                    <input asp-for="isCompany" class="form-check-input">
-                    <label asp-for="isCompany" class="form-check-label">
-                        I am a company looking to hire people
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email">Email (Your email will be your username)</label>
+                <label class="font-weight-bold" asp-for="Email">Email</label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password"></label>
+                <label class="font-weight-bold" asp-for="Password"></label>
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ConfirmPassword"></label>
+                <label class="font-weight-bold" asp-for="ConfirmPassword"></label>
                 <input asp-for="ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>

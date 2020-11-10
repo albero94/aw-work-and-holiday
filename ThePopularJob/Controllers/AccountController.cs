@@ -73,10 +73,14 @@ namespace ThePopularJob.Controllers
                         // send confirmation link
                         return RedirectToRegistrationMessageView();
                     }
+                    else
+                    {
+                        userManager.DeleteAsync(user);
+                    }
                 }
                 PrintModelErrors(result.Errors);
             }
-            return View();
+            return View(model);
         }
 
 
