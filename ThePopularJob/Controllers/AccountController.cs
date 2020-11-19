@@ -57,15 +57,20 @@ namespace ThePopularJob.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,
-                    isCompany = model.isCompany, Name = model.Name};
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    isCompany = model.isCompany,
+                    Name = model.Name
+                };
                 var result = await userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-                    if (user.isCompany) 
+                    if (user.isCompany)
                         result = await userManager.AddToRoleAsync(user, Role.Company);
-                    else 
+                    else
                         result = await userManager.AddToRoleAsync(user, Role.User);
 
                     if (result.Succeeded)
@@ -80,6 +85,8 @@ namespace ThePopularJob.Controllers
                 }
                 PrintModelErrors(result.Errors);
             }
+            model.Password = "";
+            model.ConfirmPassword = "";
             return View(model);
         }
 

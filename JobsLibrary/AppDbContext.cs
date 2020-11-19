@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
 using System.IO;
+using System.Collections.Generic;
 
 namespace JobsLibrary
 {
@@ -18,7 +19,28 @@ namespace JobsLibrary
         {
             base.OnModelCreating(builder);
             builder.Entity<ApplicationUser>(entity => entity.ToTable(name: "user"));
-            builder.Entity<IdentityRole>(entity => entity.ToTable(name: "role"));
+            builder.Entity<IdentityRole>(entity =>
+            {
+                entity.ToTable(name: "role");
+                entity.HasData(new List<IdentityRole>
+                {
+                    new IdentityRole
+                    {
+                        Name = "Admin",
+                        NormalizedName = "ADMIN"
+                    },
+                    new IdentityRole
+                    {
+                        Name = "Company",
+                        NormalizedName = "COMPANY"
+                    },
+                    new IdentityRole
+                    {
+                        Name = "User",
+                        NormalizedName = "USER"
+                    },
+                });
+            });
             builder.Entity<IdentityUserRole<string>>(entity => entity.ToTable("user_role"));
             builder.Entity<IdentityUserClaim<string>>(entity => entity.ToTable("user_claim"));
             builder.Entity<IdentityUserLogin<string>>(entity => entity.ToTable("user_login"));

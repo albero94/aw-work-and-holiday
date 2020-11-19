@@ -32,7 +32,6 @@ namespace ThePopularJob
             services.AddDbContextPool<AppDbContext>(options =>
                     options.UseNpgsql(Configuration.GetConnectionString("PostgresRemoteDatabase")));
 
-
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -42,13 +41,6 @@ namespace ThePopularJob
             })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
-
-
-            services.AddSingleton(async serviceProvider =>
-            {
-                await CreateRolesAsync(serviceProvider);
-                return "";
-            });
 
             services.Configure<ForwardedHeadersOptions>(options =>
             {
@@ -73,37 +65,17 @@ namespace ThePopularJob
                 app.UseForwardedHeaders();
                 app.UseHsts();
             }
-
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-        }
-        
-
-        public async Task CreateRolesAsync(IServiceProvider serviceProvider)
-        {
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            string[] roleNames = { "Company", "User" };
-
-            foreach( var roleName in roleNames)
-            {
-                if (!await roleManager.RoleExistsAsync(roleName))
-                {
-                    await roleManager.CreateAsync(new IdentityRole(roleName));
-                }
-            }
         }
     }
 }
