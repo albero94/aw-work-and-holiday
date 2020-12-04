@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ThePopularJob.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Company, Admin")]
     public class JobPostings : Controller
     {
         private readonly ILogger<HomeController> logger;

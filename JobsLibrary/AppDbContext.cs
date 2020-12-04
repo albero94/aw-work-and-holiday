@@ -26,18 +26,18 @@ namespace JobsLibrary
                 {
                     new IdentityRole
                     {
-                        Name = "Admin",
-                        NormalizedName = "ADMIN"
+                        Name = Role.Admin,
+                        NormalizedName = Role.Admin.ToUpper()
                     },
                     new IdentityRole
                     {
-                        Name = "Company",
-                        NormalizedName = "COMPANY"
+                        Name = Role.Company,
+                        NormalizedName = Role.Company.ToUpper()
                     },
                     new IdentityRole
                     {
-                        Name = "User",
-                        NormalizedName = "USER"
+                        Name = Role.User,
+                        NormalizedName = Role.User.ToUpper()
                     },
                 });
             });

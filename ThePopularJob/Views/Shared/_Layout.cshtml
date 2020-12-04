@@ -25,7 +25,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" target="_blank" href="https://blog.thepopularjob.com">Blog</a>
                         </li>
-                        @if (signInManager.IsSignedIn(User))
+                        @if (signInManager.IsSignedIn(User) && (User.IsInRole(Role.Company) || User.IsInRole(Role.Admin)))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="JobPostings" asp-action="ListJobs">My Jobs</a>
